@@ -1,0 +1,37 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\PosGraduacao\\SurveySystem\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{708ECAFE-C8EA-A6C0-4A0B-A02E79E2E6C9}|SurveySystem.Domain\\SurveySystem.Domain.csproj|c:\\posgraduacao\\surveysystem\\surveysystem.domain\\answer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{708ECAFE-C8EA-A6C0-4A0B-A02E79E2E6C9}|SurveySystem.Domain\\SurveySystem.Domain.csproj|solutionrelative:surveysystem.domain\\answer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Answer.cs",
+              "DocumentMoniker": "C:\\PosGraduacao\\SurveySystem\\SurveySystem.Domain\\Answer.cs",
+              "RelativeDocumentMoniker": "SurveySystem.Domain\\Answer.cs",
+              "ToolTip": "C:\\PosGraduacao\\SurveySystem\\SurveySystem.Domain\\Answer.cs",
+              "RelativeToolTip": "SurveySystem.Domain\\Answer.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-17T05:31:03.359Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

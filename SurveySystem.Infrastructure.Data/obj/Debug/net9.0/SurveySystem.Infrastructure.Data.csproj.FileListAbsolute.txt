@@ -1,0 +1,11 @@
+C:\PosGraduacao\SurveySystem\SurveySystem.Infrastructure.Data\bin\Debug\net9.0\SurveySystem.Infrastructure.Data.deps.json
+C:\PosGraduacao\SurveySystem\SurveySystem.Infrastructure.Data\bin\Debug\net9.0\SurveySystem.Infrastructure.Data.dll
+C:\PosGraduacao\SurveySystem\SurveySystem.Infrastructure.Data\bin\Debug\net9.0\SurveySystem.Infrastructure.Data.pdb
+C:\PosGraduacao\SurveySystem\SurveySystem.Infrastructure.Data\obj\Debug\net9.0\SurveySystem.Infrastructure.Data.GeneratedMSBuildEditorConfig.editorconfig
+C:\PosGraduacao\SurveySystem\SurveySystem.Infrastructure.Data\obj\Debug\net9.0\SurveySystem.Infrastructure.Data.AssemblyInfoInputs.cache
+C:\PosGraduacao\SurveySystem\SurveySystem.Infrastructure.Data\obj\Debug\net9.0\SurveySystem.Infrastructure.Data.AssemblyInfo.cs
+C:\PosGraduacao\SurveySystem\SurveySystem.Infrastructure.Data\obj\Debug\net9.0\SurveySystem.Infrastructure.Data.csproj.CoreCompileInputs.cache
+C:\PosGraduacao\SurveySystem\SurveySystem.Infrastructure.Data\obj\Debug\net9.0\SurveySystem.Infrastructure.Data.dll
+C:\PosGraduacao\SurveySystem\SurveySystem.Infrastructure.Data\obj\Debug\net9.0\refint\SurveySystem.Infrastructure.Data.dll
+C:\PosGraduacao\SurveySystem\SurveySystem.Infrastructure.Data\obj\Debug\net9.0\SurveySystem.Infrastructure.Data.pdb
+C:\PosGraduacao\SurveySystem\SurveySystem.Infrastructure.Data\obj\Debug\net9.0\ref\SurveySystem.Infrastructure.Data.dll
