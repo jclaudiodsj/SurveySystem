@@ -52,13 +52,6 @@ namespace SurveySystem.Domain
                 throw new DomainException("Option texts must be unique.");
         }
 
-        public void UpdateOrder(int newOrder)
-        {
-            ValidateOrder(Order);
-
-            Order = newOrder;
-        }
-
         protected override IEnumerable<object> GetEqualityComponents()
         {
             yield return Text;

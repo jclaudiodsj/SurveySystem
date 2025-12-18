@@ -27,14 +27,6 @@ namespace SurveySystem.Domain
                 throw new DomainException("End date must be later than start date.");
         }
 
-        public void UpdatePeriod(DateTimeOffset newStartDate, DateTimeOffset newEndDate)
-        {
-            ValidatePeriod(newStartDate, newEndDate);
-
-            StartDate = newStartDate;
-            EndDate = newEndDate;
-        }
-
         protected override IEnumerable<object> GetEqualityComponents()
         {
             yield return StartDate;

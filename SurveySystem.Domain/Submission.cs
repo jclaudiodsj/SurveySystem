@@ -10,7 +10,7 @@ namespace SurveySystem.Domain.Surveys
         private readonly List<Answer> _answers;
         public IReadOnlyList<Answer> Answers => _answers.AsReadOnly();
 
-        private Submission(Guid SurveyId, DateTimeOffset SubmittedAt, IEnumerable<Answer> Answers) 
+        private Submission(Guid SurveyId, DateTimeOffset SubmittedAt, List<Answer> Answers) 
         {
             this.SurveyId = SurveyId;
             this.SubmittedAt = SubmittedAt;
@@ -19,23 +19,25 @@ namespace SurveySystem.Domain.Surveys
             _answers.AddRange(Answers);
         }
 
-        public static Submission Create(Guid surveyId, DateTimeOffset submittedAt, IEnumerable<Answer> answers)
+        public static Submission Create(Guid SurveyId, DateTimeOffset SubmittedAt, IEnumerable<Answer> Answers)
         {
-            if (surveyId == Guid.Empty) 
+            if (SurveyId == Guid.Empty) 
                 throw new DomainException("SurveyId cannot be empty.");
 
-            if (answers == null || answers.Count() == 0)
+            var listAnswers = Answers?.ToList() ?? throw new DomainException("Answers cannot be null.");
+
+            if (listAnswers.Count() == 0)
                 throw new DomainException("A submission must contain at least one answer.");
 
             // Regra: múltipla escolha simples => no máximo 1 resposta por pergunta no mesmo envio.
-            var duplicatedQuestion = answers
+            var duplicatedQuestion = listAnswers
                 .GroupBy(a => a.QuestionId)
                 .FirstOrDefault(g => g.Count() > 1);
 
             if (duplicatedQuestion is not null)
                 throw new DomainException($"Duplicate answers for QuestionId '{duplicatedQuestion.Key}' are not allowed.");
 
-            return new Submission(surveyId, submittedAt, answers);            
+            return new Submission(SurveyId, SubmittedAt, listAnswers.ToList());            
         }
     }
 }
