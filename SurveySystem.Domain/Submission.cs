@@ -10,13 +10,13 @@ namespace SurveySystem.Domain.Surveys
         private readonly List<Answer> _answers;
         public IReadOnlyList<Answer> Answers => _answers.AsReadOnly();
 
-        private Submission(Guid SurveyId, DateTimeOffset SubmittedAt, List<Answer> Answers) 
+        private Submission(Guid SurveyId, DateTimeOffset SubmittedAt)//, List<Answer> Answers) 
         {
             this.SurveyId = SurveyId;
             this.SubmittedAt = SubmittedAt;
 
             _answers = new List<Answer>();
-            _answers.AddRange(Answers);
+            //_answers.AddRange(Answers);
         }
 
         public static Submission Create(Guid SurveyId, DateTimeOffset SubmittedAt, IEnumerable<Answer> Answers)
@@ -37,7 +37,7 @@ namespace SurveySystem.Domain.Surveys
             if (duplicatedQuestion is not null)
                 throw new DomainException($"Duplicate answers for QuestionId '{duplicatedQuestion.Key}' are not allowed.");
 
-            return new Submission(SurveyId, SubmittedAt, listAnswers.ToList());            
+            return new Submission(SurveyId, SubmittedAt);//, listAnswers.ToList());            
         }
     }
 }

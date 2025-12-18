@@ -20,27 +20,27 @@ namespace SurveySystem.Domain
 
         public DateTimeOffset? ClosedAt { get; private set; }
 
-        private readonly List<Question> _Questions;
-        public IReadOnlyList<Question> Questions => _Questions.AsReadOnly();
+        private readonly List<Question> _questions;
+        public IReadOnlyList<Question> Questions => _questions.AsReadOnly();
 
-        private Survey(string Title, string Description, DateTimeOffset StartDate, DateTimeOffset EndDate)
+        private Survey(string Title, string Description)//, DateTimeOffset StartDate, DateTimeOffset EndDate)
         {
             this.Title = Title;
             this.Description = string.IsNullOrWhiteSpace(Description) ? null : Description.Trim();
             this.Status = SurveyStatus.Draft;
-            this.Period = SurveyPeriod.Create(StartDate, EndDate);
+            //this.Period = SurveyPeriod.Create(StartDate, EndDate);
             this.CreatedAt = DateTimeOffset.UtcNow;
             this.UpdatedAt = DateTimeOffset.UtcNow;
             this.PublishedAt = null;
             this.ClosedAt = null;
-            this._Questions = new List<Question>();
+            this._questions = new List<Question>();
         }
 
         public static Survey Create(string Title, string Description, DateTimeOffset StartDate, DateTimeOffset EndDate)
         {
             ValidateTitle(Title);
 
-            return new Survey(Title, Description, StartDate, EndDate);
+            return new Survey(Title, Description);//, StartDate, EndDate);
         }
 
         private static void ValidateTitle(string Title)
@@ -67,11 +67,11 @@ namespace SurveySystem.Domain
             if (Status != SurveyStatus.Draft)
                 throw new DomainException("Only surveys in Draft status can be modified.");
 
-            if (_Questions.Any(q => q.Text.Equals(Text, StringComparison.OrdinalIgnoreCase)))
+            if (_questions.Any(q => q.Text.Equals(Text, StringComparison.OrdinalIgnoreCase)))
                 throw new DomainException("A question with the same text already exists in the survey.");
 
             this.UpdatedAt = DateTimeOffset.UtcNow;
-            this._Questions.Add(Question.Create(Text, _Questions.Count, Options));
+            this._questions.Add(Question.Create(Text, _questions.Count, Options));
         }
 
         public void RemoveQuestion(int questionIndex)
@@ -79,19 +79,19 @@ namespace SurveySystem.Domain
             if (Status != SurveyStatus.Draft)
                 throw new DomainException("Only surveys in Draft status can be modified.");
 
-            if (questionIndex < 0 || questionIndex >= _Questions.Count)
+            if (questionIndex < 0 || questionIndex >= _questions.Count)
                 throw new DomainException("Invalid question index.");
 
             this.UpdatedAt = DateTimeOffset.UtcNow;
-            _Questions.RemoveAt(questionIndex);
+            _questions.RemoveAt(questionIndex);
             
             ReorderQuestions();
         }
 
         private void ReorderQuestions()
         {   
-            for (int i = 0; i < _Questions.Count; i++)
-                _Questions[i] = Question.Create(_Questions[i].Text, i, _Questions[i].Options.Select(o => o.Text).ToList());
+            for (int i = 0; i < _questions.Count; i++)
+                _questions[i] = Question.Create(_questions[i].Text, i, _questions[i].Options.Select(o => o.Text).ToList());
         }
 
         public void Publish()
@@ -99,7 +99,7 @@ namespace SurveySystem.Domain
             if (Status != SurveyStatus.Draft)
                 throw new DomainException("Only surveys in Draft status can be published.");
 
-            if (_Questions.Count == 0)
+            if (_questions.Count == 0)
                 throw new DomainException("Cannot publish a survey with no questions.");
 
             PublishedAt = DateTimeOffset.UtcNow;
