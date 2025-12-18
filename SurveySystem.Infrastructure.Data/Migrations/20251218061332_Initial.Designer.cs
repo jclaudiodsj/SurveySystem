@@ -12,7 +12,7 @@ using SurveySystem.Infrastructure.Data;
 namespace SurveySystem.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(SurveyDbContext))]
-    [Migration("20251218055501_Initial")]
+    [Migration("20251218061332_Initial")]
     partial class Initial
     {
         /// <inheritdoc />

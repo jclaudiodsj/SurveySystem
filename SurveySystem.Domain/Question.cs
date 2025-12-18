@@ -11,20 +11,11 @@ namespace SurveySystem.Domain
         private readonly List<Option> _options;
         public IReadOnlyList<Option> Options => _options.AsReadOnly();
 
-        private Question() // EF
+        private Question()
         {
-            _options = new List<Option>();
-        }
-
-        private Question(string Text, int Order) : this()  //, List<string> Options)
-        {
-            this.Text = Text;
-            this.Order = Order;
-
+            this.Text = string.Empty;
+            this.Order = 0;
             this._options = new List<Option>();
-
-            //for (int i = 0; i < Options.Count; i++)
-            //    this._Options.Add(Option.Create(Options[i], i));
         }
 
         public static Question Create(string Text, int Order, List<string> Options)
@@ -33,7 +24,10 @@ namespace SurveySystem.Domain
             ValidateOrder(Order);
             ValidateOptions(Options);
 
-            var q = new Question(Text, Order);//, Options);
+            var q = new Question();
+
+            q.Text = Text;
+            q.Order = Order;
 
             for (int i = 0; i < Options.Count; i++)
                 q._options.Add(Option.Create(Options[i], i));

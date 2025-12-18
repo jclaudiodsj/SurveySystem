@@ -1,4 +1,5 @@
 ﻿using SurveySystem.Domain.Shared;
+using System.Windows.Markup;
 
 namespace SurveySystem.Domain
 {
@@ -40,7 +41,11 @@ namespace SurveySystem.Domain
         {
             ValidateTitle(Title);
 
-            return new Survey(Title, Description);//, StartDate, EndDate);
+            var s = new Survey(Title, Description);//, StartDate, EndDate);
+
+            s.Period = SurveyPeriod.Create(StartDate, EndDate);
+
+            return s;
         }
 
         private static void ValidateTitle(string Title)
