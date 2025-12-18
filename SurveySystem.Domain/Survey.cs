@@ -34,7 +34,7 @@ namespace SurveySystem.Domain
         private static void ValidateTitle(string Title)
         {
             if (string.IsNullOrWhiteSpace(Title))
-                throw new ArgumentException("Title cannot be null or empty.", nameof(Title));
+                throw new DomainException("Title cannot be null or empty.");
         }
 
         private static void ValidateDescription(string Description)
@@ -45,7 +45,7 @@ namespace SurveySystem.Domain
         public void UpdateDetails(string Title, string Description, DateTimeOffset StartDate, DateTimeOffset EndDate)
         {
             if (Status != SurveyStatus.Draft)
-                throw new InvalidOperationException("Only surveys in Draft status can be updated.");
+                throw new DomainException("Only surveys in Draft status can be updated.");
 
             ValidateTitle(Title);
             ValidateDescription(Description);
@@ -58,18 +58,18 @@ namespace SurveySystem.Domain
         public void AddQuestion(string Text, List<string> Options)
         {
             if (Status != SurveyStatus.Draft)
-                throw new InvalidOperationException("Only surveys in Draft status can be modified.");
+                throw new DomainException("Only surveys in Draft status can be modified.");
 
             if (_Questions.Any(q => q.Text.Equals(Text, StringComparison.OrdinalIgnoreCase)))
-                throw new InvalidOperationException("A question with the same text already exists in the survey.");
+                throw new DomainException("A question with the same text already exists in the survey.");
 
             _Questions.Add(Question.Create(Text, _Questions.Count, Options));
         }
 
-        public void RemoverQuestion(int questionIndex)
+        public void RemoveQuestion(int questionIndex)
         {
             if (questionIndex < 0 || questionIndex >= _Questions.Count)
-                throw new ArgumentOutOfRangeException(nameof(questionIndex), "Invalid question index.");
+                throw new DomainException("Invalid question index.");
 
             _Questions.RemoveAt(questionIndex);
             
@@ -85,10 +85,10 @@ namespace SurveySystem.Domain
         public void Publish()
         {
             if (Status != SurveyStatus.Draft)
-                throw new InvalidOperationException("Only surveys in Draft status can be published.");
+                throw new DomainException("Only surveys in Draft status can be published.");
 
             if (_Questions.Count == 0)
-                throw new InvalidOperationException("Cannot publish a survey with no questions.");
+                throw new DomainException("Cannot publish a survey with no questions.");
 
             Status = SurveyStatus.Published;
         }
@@ -96,7 +96,7 @@ namespace SurveySystem.Domain
         public void Close()
         {
             if (Status != SurveyStatus.Published)
-                throw new InvalidOperationException("Only surveys in Published status can be closed.");
+                throw new DomainException("Only surveys in Published status can be closed.");
 
             Status = SurveyStatus.Closed;
         }

@@ -34,22 +34,22 @@ namespace SurveySystem.Domain
         private static void ValidateText(string Text)
         {
             if (string.IsNullOrWhiteSpace(Text))
-                throw new ArgumentException("Question text cannot be null or empty.", nameof(Text));
+                throw new DomainException("Question text cannot be null or empty.");
         }
 
         private static void ValidateOrder(int Order)
         {
             if (Order < 0)
-                throw new ArgumentOutOfRangeException(nameof(Order), "Order cannot be negative.");
+                throw new DomainException("Order cannot be negative.");
         }
 
         private static void ValidateOptions(List<string> options)
         {
             if (options == null || options.Count < 2)
-                throw new ArgumentException("A question must have at least two options.", nameof(options));
+                throw new DomainException("A question must have at least two options.");
 
             if (options.Count != options.Distinct(StringComparer.OrdinalIgnoreCase).Count())
-                throw new ArgumentException("Option texts must be unique.", nameof(options));
+                throw new DomainException("Option texts must be unique.");
         }
 
         public void UpdateOrder(int newOrder)

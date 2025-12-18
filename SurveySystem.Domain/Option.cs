@@ -25,13 +25,13 @@ namespace SurveySystem.Domain
         private static void ValidateText(string Text)
         {
             if (string.IsNullOrWhiteSpace(Text))
-                throw new ArgumentException("Option text cannot be null or empty.", nameof(Text));
+                throw new DomainException("Option text cannot be null or empty.");
         }
 
         private static void ValidateOrder(int Order)
         {
             if (Order < 0)
-                throw new ArgumentOutOfRangeException(nameof(Order), "Order cannot be negative.");
+                throw new DomainException("Order cannot be negative.");
         }        
 
         protected override IEnumerable<object> GetEqualityComponents()

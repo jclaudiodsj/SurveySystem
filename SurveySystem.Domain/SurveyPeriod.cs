@@ -24,7 +24,7 @@ namespace SurveySystem.Domain
         private static void ValidatePeriod(DateTimeOffset StartDate, DateTimeOffset EndDate)
         {
             if (EndDate <= StartDate)
-                throw new ArgumentException("End date must be later than start date.");
+                throw new DomainException("End date must be later than start date.");
         }
 
         public void UpdatePeriod(DateTimeOffset newStartDate, DateTimeOffset newEndDate)
