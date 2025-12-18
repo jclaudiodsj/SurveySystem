@@ -3,44 +3,28 @@
   "WorkspaceRootPath": "C:\\PosGraduacao\\SurveySystem\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{85CB58FB-EE9C-4CF1-8841-6803D7816991}|SurveySystem.Domain.Tests\\SurveySystem.Domain.Tests.csproj|c:\\posgraduacao\\surveysystem\\surveysystem.domain.tests\\surveytests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{85CB58FB-EE9C-4CF1-8841-6803D7816991}|SurveySystem.Domain.Tests\\SurveySystem.Domain.Tests.csproj|solutionrelative:surveysystem.domain.tests\\surveytests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{708ECAFE-C8EA-A6C0-4A0B-A02E79E2E6C9}|SurveySystem.Domain\\SurveySystem.Domain.csproj|c:\\posgraduacao\\surveysystem\\surveysystem.domain\\submission.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{708ECAFE-C8EA-A6C0-4A0B-A02E79E2E6C9}|SurveySystem.Domain\\SurveySystem.Domain.csproj|solutionrelative:surveysystem.domain\\submission.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{708ECAFE-C8EA-A6C0-4A0B-A02E79E2E6C9}|SurveySystem.Domain\\SurveySystem.Domain.csproj|c:\\posgraduacao\\surveysystem\\surveysystem.domain\\survey.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{708ECAFE-C8EA-A6C0-4A0B-A02E79E2E6C9}|SurveySystem.Domain\\SurveySystem.Domain.csproj|solutionrelative:surveysystem.domain\\survey.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{708ECAFE-C8EA-A6C0-4A0B-A02E79E2E6C9}|SurveySystem.Domain\\SurveySystem.Domain.csproj|c:\\posgraduacao\\surveysystem\\surveysystem.domain\\domainexception.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{708ECAFE-C8EA-A6C0-4A0B-A02E79E2E6C9}|SurveySystem.Domain\\SurveySystem.Domain.csproj|solutionrelative:surveysystem.domain\\domainexception.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{27E6D544-BC4A-661B-37E4-448C30C086B7}|SurveySystem.Infrastructure.Data\\SurveySystem.Infrastructure.Data.csproj|c:\\posgraduacao\\surveysystem\\surveysystem.infrastructure.data\\class1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{27E6D544-BC4A-661B-37E4-448C30C086B7}|SurveySystem.Infrastructure.Data\\SurveySystem.Infrastructure.Data.csproj|solutionrelative:surveysystem.infrastructure.data\\class1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{27E6D544-BC4A-661B-37E4-448C30C086B7}|SurveySystem.Infrastructure.Data\\SurveySystem.Infrastructure.Data.csproj|c:\\posgraduacao\\surveysystem\\surveysystem.infrastructure.data\\surveysystem.infrastructure.data.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
-      "RelativeMoniker": "D:0:0:{27E6D544-BC4A-661B-37E4-448C30C086B7}|SurveySystem.Infrastructure.Data\\SurveySystem.Infrastructure.Data.csproj|solutionrelative:surveysystem.infrastructure.data\\surveysystem.infrastructure.data.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{708ECAFE-C8EA-A6C0-4A0B-A02E79E2E6C9}|SurveySystem.Domain\\SurveySystem.Domain.csproj|c:\\posgraduacao\\surveysystem\\surveysystem.domain\\surveyperiod.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{708ECAFE-C8EA-A6C0-4A0B-A02E79E2E6C9}|SurveySystem.Domain\\SurveySystem.Domain.csproj|solutionrelative:surveysystem.domain\\surveyperiod.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{708ECAFE-C8EA-A6C0-4A0B-A02E79E2E6C9}|SurveySystem.Domain\\SurveySystem.Domain.csproj|c:\\posgraduacao\\surveysystem\\surveysystem.domain\\surveystatus.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{708ECAFE-C8EA-A6C0-4A0B-A02E79E2E6C9}|SurveySystem.Domain\\SurveySystem.Domain.csproj|solutionrelative:surveysystem.domain\\surveystatus.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{708ECAFE-C8EA-A6C0-4A0B-A02E79E2E6C9}|SurveySystem.Domain\\SurveySystem.Domain.csproj|c:\\posgraduacao\\surveysystem\\surveysystem.domain\\answer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{708ECAFE-C8EA-A6C0-4A0B-A02E79E2E6C9}|SurveySystem.Domain\\SurveySystem.Domain.csproj|solutionrelative:surveysystem.domain\\answer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{708ECAFE-C8EA-A6C0-4A0B-A02E79E2E6C9}|SurveySystem.Domain\\SurveySystem.Domain.csproj|c:\\posgraduacao\\surveysystem\\surveysystem.domain\\option.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{708ECAFE-C8EA-A6C0-4A0B-A02E79E2E6C9}|SurveySystem.Domain\\SurveySystem.Domain.csproj|solutionrelative:surveysystem.domain\\option.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{708ECAFE-C8EA-A6C0-4A0B-A02E79E2E6C9}|SurveySystem.Domain\\SurveySystem.Domain.csproj|c:\\posgraduacao\\surveysystem\\surveysystem.domain\\survey.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{708ECAFE-C8EA-A6C0-4A0B-A02E79E2E6C9}|SurveySystem.Domain\\SurveySystem.Domain.csproj|solutionrelative:surveysystem.domain\\survey.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{708ECAFE-C8EA-A6C0-4A0B-A02E79E2E6C9}|SurveySystem.Domain\\SurveySystem.Domain.csproj|c:\\posgraduacao\\surveysystem\\surveysystem.domain\\question.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{708ECAFE-C8EA-A6C0-4A0B-A02E79E2E6C9}|SurveySystem.Domain\\SurveySystem.Domain.csproj|solutionrelative:surveysystem.domain\\question.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{708ECAFE-C8EA-A6C0-4A0B-A02E79E2E6C9}|SurveySystem.Domain\\SurveySystem.Domain.csproj|c:\\posgraduacao\\surveysystem\\surveysystem.domain\\shared\\valueobject.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{708ECAFE-C8EA-A6C0-4A0B-A02E79E2E6C9}|SurveySystem.Domain\\SurveySystem.Domain.csproj|solutionrelative:surveysystem.domain\\shared\\valueobject.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{708ECAFE-C8EA-A6C0-4A0B-A02E79E2E6C9}|SurveySystem.Domain\\SurveySystem.Domain.csproj|c:\\posgraduacao\\surveysystem\\surveysystem.domain\\shared\\entity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{708ECAFE-C8EA-A6C0-4A0B-A02E79E2E6C9}|SurveySystem.Domain\\SurveySystem.Domain.csproj|solutionrelative:surveysystem.domain\\shared\\entity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -50,136 +34,84 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "SurveyTests.cs",
-              "DocumentMoniker": "C:\\PosGraduacao\\SurveySystem\\SurveySystem.Domain.Tests\\SurveyTests.cs",
-              "RelativeDocumentMoniker": "SurveySystem.Domain.Tests\\SurveyTests.cs",
-              "ToolTip": "C:\\PosGraduacao\\SurveySystem\\SurveySystem.Domain.Tests\\SurveyTests.cs",
-              "RelativeToolTip": "SurveySystem.Domain.Tests\\SurveyTests.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAWAAAAAAAAAA==",
+              "DocumentIndex": 1,
+              "Title": "DomainException.cs",
+              "DocumentMoniker": "C:\\PosGraduacao\\SurveySystem\\SurveySystem.Domain\\DomainException.cs",
+              "RelativeDocumentMoniker": "SurveySystem.Domain\\DomainException.cs",
+              "ToolTip": "C:\\PosGraduacao\\SurveySystem\\SurveySystem.Domain\\DomainException.cs",
+              "RelativeToolTip": "SurveySystem.Domain\\DomainException.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-17T05:13:55.935Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Class1.cs",
-              "DocumentMoniker": "C:\\PosGraduacao\\SurveySystem\\SurveySystem.Infrastructure.Data\\Class1.cs",
-              "RelativeDocumentMoniker": "SurveySystem.Infrastructure.Data\\Class1.cs",
-              "ToolTip": "C:\\PosGraduacao\\SurveySystem\\SurveySystem.Infrastructure.Data\\Class1.cs",
-              "RelativeToolTip": "SurveySystem.Infrastructure.Data\\Class1.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-17T05:13:51.023Z",
+              "WhenOpened": "2025-12-18T00:45:05.704Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "SurveySystem.Infrastructure.Data",
-              "DocumentMoniker": "C:\\PosGraduacao\\SurveySystem\\SurveySystem.Infrastructure.Data\\SurveySystem.Infrastructure.Data.csproj",
-              "RelativeDocumentMoniker": "SurveySystem.Infrastructure.Data\\SurveySystem.Infrastructure.Data.csproj",
-              "ToolTip": "C:\\PosGraduacao\\SurveySystem\\SurveySystem.Infrastructure.Data\\SurveySystem.Infrastructure.Data.csproj",
-              "RelativeToolTip": "SurveySystem.Infrastructure.Data\\SurveySystem.Infrastructure.Data.csproj",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-12-17T05:13:49.009Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "SurveyPeriod.cs",
-              "DocumentMoniker": "C:\\PosGraduacao\\SurveySystem\\SurveySystem.Domain\\SurveyPeriod.cs",
-              "RelativeDocumentMoniker": "SurveySystem.Domain\\SurveyPeriod.cs",
-              "ToolTip": "C:\\PosGraduacao\\SurveySystem\\SurveySystem.Domain\\SurveyPeriod.cs",
-              "RelativeToolTip": "SurveySystem.Domain\\SurveyPeriod.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAACgAAAAhAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-17T05:12:20.136Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "SurveyStatus.cs",
-              "DocumentMoniker": "C:\\PosGraduacao\\SurveySystem\\SurveySystem.Domain\\SurveyStatus.cs",
-              "RelativeDocumentMoniker": "SurveySystem.Domain\\SurveyStatus.cs",
-              "ToolTip": "C:\\PosGraduacao\\SurveySystem\\SurveySystem.Domain\\SurveyStatus.cs",
-              "RelativeToolTip": "SurveySystem.Domain\\SurveyStatus.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-17T05:12:18.266Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "Question.cs",
-              "DocumentMoniker": "C:\\PosGraduacao\\SurveySystem\\SurveySystem.Domain\\Question.cs",
-              "RelativeDocumentMoniker": "SurveySystem.Domain\\Question.cs",
-              "ToolTip": "C:\\PosGraduacao\\SurveySystem\\SurveySystem.Domain\\Question.cs",
-              "RelativeToolTip": "SurveySystem.Domain\\Question.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-17T05:11:23.578Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
               "Title": "Option.cs",
               "DocumentMoniker": "C:\\PosGraduacao\\SurveySystem\\SurveySystem.Domain\\Option.cs",
               "RelativeDocumentMoniker": "SurveySystem.Domain\\Option.cs",
               "ToolTip": "C:\\PosGraduacao\\SurveySystem\\SurveySystem.Domain\\Option.cs",
               "RelativeToolTip": "SurveySystem.Domain\\Option.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAdAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-17T05:10:21.274Z",
+              "WhenOpened": "2025-12-18T00:33:56.58Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
+              "Title": "Submission.cs",
+              "DocumentMoniker": "C:\\PosGraduacao\\SurveySystem\\SurveySystem.Domain\\Submission.cs",
+              "RelativeDocumentMoniker": "SurveySystem.Domain\\Submission.cs",
+              "ToolTip": "C:\\PosGraduacao\\SurveySystem\\SurveySystem.Domain\\Submission.cs",
+              "RelativeToolTip": "SurveySystem.Domain\\Submission.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-18T00:30:41.59Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Answer.cs",
+              "DocumentMoniker": "C:\\PosGraduacao\\SurveySystem\\SurveySystem.Domain\\Answer.cs",
+              "RelativeDocumentMoniker": "SurveySystem.Domain\\Answer.cs",
+              "ToolTip": "C:\\PosGraduacao\\SurveySystem\\SurveySystem.Domain\\Answer.cs",
+              "RelativeToolTip": "SurveySystem.Domain\\Answer.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAsAAAAwAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-18T00:27:20.57Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Question.cs",
+              "DocumentMoniker": "C:\\PosGraduacao\\SurveySystem\\SurveySystem.Domain\\Question.cs",
+              "RelativeDocumentMoniker": "SurveySystem.Domain\\Question.cs",
+              "ToolTip": "C:\\PosGraduacao\\SurveySystem\\SurveySystem.Domain\\Question.cs",
+              "RelativeToolTip": "SurveySystem.Domain\\Question.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-17T23:48:13.593Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "Survey.cs",
               "DocumentMoniker": "C:\\PosGraduacao\\SurveySystem\\SurveySystem.Domain\\Survey.cs",
               "RelativeDocumentMoniker": "SurveySystem.Domain\\Survey.cs",
               "ToolTip": "C:\\PosGraduacao\\SurveySystem\\SurveySystem.Domain\\Survey.cs",
               "RelativeToolTip": "SurveySystem.Domain\\Survey.cs",
-              "ViewState": "AgIAAC0AAAAAAAAAAAAkwCEAAAApAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAcAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-17T05:08:34.641Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "ValueObject.cs",
-              "DocumentMoniker": "C:\\PosGraduacao\\SurveySystem\\SurveySystem.Domain\\Shared\\ValueObject.cs",
-              "RelativeDocumentMoniker": "SurveySystem.Domain\\Shared\\ValueObject.cs",
-              "ToolTip": "C:\\PosGraduacao\\SurveySystem\\SurveySystem.Domain\\Shared\\ValueObject.cs",
-              "RelativeToolTip": "SurveySystem.Domain\\Shared\\ValueObject.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAlAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-17T05:06:48.292Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "Entity.cs",
-              "DocumentMoniker": "C:\\PosGraduacao\\SurveySystem\\SurveySystem.Domain\\Shared\\Entity.cs",
-              "RelativeDocumentMoniker": "SurveySystem.Domain\\Shared\\Entity.cs",
-              "ToolTip": "C:\\PosGraduacao\\SurveySystem\\SurveySystem.Domain\\Shared\\Entity.cs",
-              "RelativeToolTip": "SurveySystem.Domain\\Shared\\Entity.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAuAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-17T05:06:28.658Z",
+              "WhenOpened": "2025-12-17T23:48:07.534Z",
               "EditorCaption": ""
             }
           ]

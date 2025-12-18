@@ -101,3 +101,4 @@ C:\PosGraduacao\SurveySystem\SurveySystem.Domain.Tests\obj\Debug\net9.0\refint\S
 C:\PosGraduacao\SurveySystem\SurveySystem.Domain.Tests\obj\Debug\net9.0\SurveySystem.Domain.Tests.pdb
 C:\PosGraduacao\SurveySystem\SurveySystem.Domain.Tests\obj\Debug\net9.0\SurveySystem.Domain.Tests.genruntimeconfig.cache
 C:\PosGraduacao\SurveySystem\SurveySystem.Domain.Tests\obj\Debug\net9.0\ref\SurveySystem.Domain.Tests.dll
+C:\PosGraduacao\SurveySystem\SurveySystem.Domain.Tests\obj\Debug\net9.0\SurveySystem.Domain.Tests.sourcelink.json

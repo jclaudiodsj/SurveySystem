@@ -34,20 +34,6 @@ namespace SurveySystem.Domain
                 throw new ArgumentOutOfRangeException(nameof(Order), "Order cannot be negative.");
         }        
 
-        public void UpdateText(string newText)
-        {
-            ValidateText(Text);
-
-            Text = newText;
-        }
-
-        public void UpdateOrder(int newOrder)
-        {
-            ValidateOrder(Order);
-
-            Order = newOrder;
-        }
-
         protected override IEnumerable<object> GetEqualityComponents()
         {
             yield return Text;

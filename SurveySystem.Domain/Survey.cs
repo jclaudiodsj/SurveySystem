@@ -12,21 +12,21 @@ namespace SurveySystem.Domain
 
         public SurveyPeriod Period { get; private set; }
 
-        private readonly List<Question> _questions;
-        public IReadOnlyList<Question> Questions => _questions.AsReadOnly();
+        private readonly List<Question> _Questions;
+        public IReadOnlyList<Question> Questions => _Questions.AsReadOnly();
 
         private Survey(string Title, string Description, DateTimeOffset StartDate, DateTimeOffset EndDate)
         {
             this.Title = Title;
             this.Description = Description;
             this.Period = SurveyPeriod.Create(StartDate, EndDate);
-            this._questions = new List<Question>();
+            this._Questions = new List<Question>();
         }
 
         public static Survey Create(string Title, string Description, DateTimeOffset StartDate, DateTimeOffset EndDate)
         {
             ValidateTitle(Title);
-            ValidateDescription(Description);            
+            ValidateDescription(Description);
 
             return new Survey(Title, Description, StartDate, EndDate);
         }
@@ -37,84 +37,49 @@ namespace SurveySystem.Domain
                 throw new ArgumentException("Title cannot be null or empty.", nameof(Title));
         }
 
-        private static void ValidateDescription(string description)
+        private static void ValidateDescription(string Description)
         {
 
         }
 
-        public void UpdateDetails(string Title, string Description)
+        public void UpdateDetails(string Title, string Description, DateTimeOffset StartDate, DateTimeOffset EndDate)
         {
+            if (Status != SurveyStatus.Draft)
+                throw new InvalidOperationException("Only surveys in Draft status can be updated.");
+
             ValidateTitle(Title);
             ValidateDescription(Description);
 
-            if(Status != SurveyStatus.Draft)
-                throw new InvalidOperationException("Only surveys in Draft status can be updated.");
-
             this.Title = Title;
             this.Description = Description;
+            this.Period.UpdatePeriod(StartDate, EndDate);
         }
 
-        public void AddQuestion(string Text)
+        public void AddQuestion(string Text, List<string> Options)
         {
             if (Status != SurveyStatus.Draft)
                 throw new InvalidOperationException("Only surveys in Draft status can be modified.");
 
-            if (_questions.Any(q => q.Text.Equals(Text, StringComparison.OrdinalIgnoreCase)))
+            if (_Questions.Any(q => q.Text.Equals(Text, StringComparison.OrdinalIgnoreCase)))
                 throw new InvalidOperationException("A question with the same text already exists in the survey.");
 
-            _questions.Add(Question.Create(Text, _questions.Count));
-        }
-
-        public void UpdateQuestionText(int questionIndex, string newText)
-        {
-            if (questionIndex < 0 || questionIndex >= _questions.Count)
-                throw new ArgumentOutOfRangeException(nameof(questionIndex), "Invalid question index.");
-
-            if (_questions.Where((q, i) => i != questionIndex)
-                        .Any(q => q.Text.Equals(newText, StringComparison.OrdinalIgnoreCase)))
-                throw new InvalidOperationException("A question with the same text already exists in the survey.");
-
-            _questions[questionIndex].UpdateText(newText);
-        }
-
-        public void AddOptionToQuestion(int questionIndex, string optionText)
-        {
-            if (questionIndex < 0 || questionIndex >= _questions.Count)
-                throw new ArgumentOutOfRangeException(nameof(questionIndex), "Invalid question index.");
-
-            _questions[questionIndex].AddOption(optionText);
-        }
-
-        public void UpdateOptionTextInQuestion(int questionIndex, int optionIndex, string newText)
-        {
-            if (questionIndex < 0 || questionIndex >= _questions.Count)
-                throw new ArgumentOutOfRangeException(nameof(questionIndex), "Invalid question index.");
-
-            _questions[questionIndex].UpdateOptionText(optionIndex, newText);
-        }
-
-        public void RemoveOptionFromQuestion(int questionIndex, int optionIndex)
-        {
-            if (questionIndex < 0 || questionIndex >= _questions.Count)
-                throw new ArgumentOutOfRangeException(nameof(questionIndex), "Invalid question index.");
-
-            _questions[questionIndex].RemoveOption(optionIndex);
+            _Questions.Add(Question.Create(Text, _Questions.Count, Options));
         }
 
         public void RemoverQuestion(int questionIndex)
         {
-            if (questionIndex < 0 || questionIndex >= _questions.Count)
+            if (questionIndex < 0 || questionIndex >= _Questions.Count)
                 throw new ArgumentOutOfRangeException(nameof(questionIndex), "Invalid question index.");
 
-            _questions.RemoveAt(questionIndex);
+            _Questions.RemoveAt(questionIndex);
             
             ReorderQuestions();
         }
 
         private void ReorderQuestions()
         {   
-            for (int i = 0; i < _questions.Count; i++)
-                _questions[i].UpdateOrder(i);
+            for (int i = 0; i < _Questions.Count; i++)
+                _Questions[i].UpdateOrder(i);
         }
 
         public void Publish()
@@ -122,7 +87,7 @@ namespace SurveySystem.Domain
             if (Status != SurveyStatus.Draft)
                 throw new InvalidOperationException("Only surveys in Draft status can be published.");
 
-            if (_questions.Count == 0)
+            if (_Questions.Count == 0)
                 throw new InvalidOperationException("Cannot publish a survey with no questions.");
 
             Status = SurveyStatus.Published;

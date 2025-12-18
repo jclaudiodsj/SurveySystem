@@ -9,7 +9,8 @@ namespace SurveySystem.Domain
 
         protected override IEnumerable<object> GetEqualityComponents()
         {
-            throw new NotImplementedException();
+            yield return QuestionId;
+            yield return OptionId;
         }
     }
 }

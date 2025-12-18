@@ -8,24 +8,29 @@ namespace SurveySystem.Domain
 
         public int Order { get; private set; }
 
-        private readonly List<Option> _options;
-        public IReadOnlyList<Option> Options => _options.AsReadOnly();
+        private readonly List<Option> _Options;
+        public IReadOnlyList<Option> Options => _Options.AsReadOnly();
 
-        private Question(string Text, int Order)
+        private Question(string Text, int Order, List<string> Options)
         {
             this.Text = Text;
             this.Order = Order;
-            this._options = new List<Option>();
+
+            this._Options = new List<Option>();
+
+            for (int i = 0; i < Options.Count; i++)
+                this._Options.Add(Option.Create(Options[i], i));
         }
 
-        public static Question Create(string Text, int Order)
+        public static Question Create(string Text, int Order, List<string> Options)
         {
             ValidateText(Text);
             ValidateOrder(Order);
+            ValidateOptions(Options);
 
-            return new Question(Text, Order);
+            return new Question(Text, Order, Options);
         }
-        
+
         private static void ValidateText(string Text)
         {
             if (string.IsNullOrWhiteSpace(Text))
@@ -38,11 +43,13 @@ namespace SurveySystem.Domain
                 throw new ArgumentOutOfRangeException(nameof(Order), "Order cannot be negative.");
         }
 
-        public void UpdateText(string newText)
+        private static void ValidateOptions(List<string> options)
         {
-            ValidateText(Text);
+            if (options == null || options.Count < 2)
+                throw new ArgumentException("A question must have at least two options.", nameof(options));
 
-            Text = newText;
+            if (options.Count != options.Distinct(StringComparer.OrdinalIgnoreCase).Count())
+                throw new ArgumentException("Option texts must be unique.", nameof(options));
         }
 
         public void UpdateOrder(int newOrder)
@@ -50,42 +57,6 @@ namespace SurveySystem.Domain
             ValidateOrder(Order);
 
             Order = newOrder;
-        }
-
-        public void AddOption(string Text)
-        {
-            if(_options.Any(o => o.Text.Equals(Text, StringComparison.OrdinalIgnoreCase)))
-                throw new InvalidOperationException("An option with the same text already exists for this question.");
-
-            _options.Add(Option.Create(Text, _options.Count));
-        }
-
-        public void UpdateOptionText(int optionIndex, string newText)
-        {
-            if (optionIndex < 0 || optionIndex >= _options.Count)
-                throw new ArgumentOutOfRangeException(nameof(optionIndex), "Option index is out of range.");
-
-            if (_options.Where((o, i) => i != optionIndex)
-                        .Any(o => o.Text.Equals(newText, StringComparison.OrdinalIgnoreCase)))
-                throw new InvalidOperationException("An option with the same text already exists for this question.");
-
-            _options[optionIndex].UpdateText(newText);
-        }
-
-        public void RemoveOption(int optionIndex)
-        {
-            if (optionIndex < 0 || optionIndex >= _options.Count)
-                throw new ArgumentOutOfRangeException(nameof(optionIndex), "Option index is out of range.");
-
-            _options.RemoveAt(optionIndex);
-            
-            ReorderOptions(optionIndex);
-        }
-
-        private void ReorderOptions(int optionIndex)
-        {
-            for (int i = optionIndex; i < _options.Count; i++)
-                _options[i].UpdateOrder(i);
         }
 
         protected override IEnumerable<object> GetEqualityComponents()

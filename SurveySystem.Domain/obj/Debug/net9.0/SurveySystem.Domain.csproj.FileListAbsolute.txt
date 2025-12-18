@@ -9,3 +9,4 @@ C:\PosGraduacao\SurveySystem\SurveySystem.Domain\obj\Debug\net9.0\SurveySystem.D
 C:\PosGraduacao\SurveySystem\SurveySystem.Domain\obj\Debug\net9.0\refint\SurveySystem.Domain.dll
 C:\PosGraduacao\SurveySystem\SurveySystem.Domain\obj\Debug\net9.0\SurveySystem.Domain.pdb
 C:\PosGraduacao\SurveySystem\SurveySystem.Domain\obj\Debug\net9.0\ref\SurveySystem.Domain.dll
+C:\PosGraduacao\SurveySystem\SurveySystem.Domain\obj\Debug\net9.0\SurveySystem.Domain.sourcelink.json

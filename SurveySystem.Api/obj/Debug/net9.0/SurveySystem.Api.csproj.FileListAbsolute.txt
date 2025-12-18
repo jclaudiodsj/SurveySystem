@@ -34,3 +34,4 @@ C:\PosGraduacao\SurveySystem\SurveySystem.Api\obj\Debug\net9.0\ref\SurveySystem.
 C:\PosGraduacao\SurveySystem\SurveySystem.Api\bin\Debug\net9.0\Swashbuckle.AspNetCore.Swagger.dll
 C:\PosGraduacao\SurveySystem\SurveySystem.Api\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\PosGraduacao\SurveySystem\SurveySystem.Api\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\PosGraduacao\SurveySystem\SurveySystem.Api\obj\Debug\net9.0\SurveySystem.Api.sourcelink.json
