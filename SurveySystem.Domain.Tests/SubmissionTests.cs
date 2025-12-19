@@ -1,5 +1,4 @@
-﻿using SurveySystem.Domain.Shared;
-using SurveySystem.Domain.Surveys;
+﻿using SurveySystem.Domain.Surveys;
 
 namespace SurveySystem.Domain.Tests
 {
