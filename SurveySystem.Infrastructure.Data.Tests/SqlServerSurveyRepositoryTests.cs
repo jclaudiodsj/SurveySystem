@@ -72,7 +72,7 @@ namespace SurveySystem.Infrastructure.Data.Tests
             await _repositorySurvey.Add(survey);
             await _context.SaveChangesAsync();
             // Act
-            survey.UpdateDetails("Updated Title", "Updated Description", DateTimeOffset.Now, DateTimeOffset.Now.AddDays(15));
+            survey.Update("Updated Title", "Updated Description", DateTimeOffset.Now, DateTimeOffset.Now.AddDays(15));
             await _repositorySurvey.Update(survey);
             await _context.SaveChangesAsync();
             // Assert

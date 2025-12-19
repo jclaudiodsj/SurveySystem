@@ -65,7 +65,7 @@ namespace SurveySystem.Domain.Tests.Surveys
             DateTimeOffset newStartDate = DateTimeOffset.Now.AddDays(1);
             DateTimeOffset newEndDate = newStartDate.AddDays(20);
             // Act
-            survey.UpdateDetails(newTitle, newDescription, newStartDate, newEndDate);
+            survey.Update(newTitle, newDescription, newStartDate, newEndDate);
             // Assert
             Assert.Equal(newTitle, survey.Title);
             Assert.Equal(newDescription, survey.Description);
@@ -87,7 +87,7 @@ namespace SurveySystem.Domain.Tests.Surveys
             DateTimeOffset newStartDate = DateTimeOffset.Now.AddDays(1);
             DateTimeOffset newEndDate = newStartDate.AddDays(20);
             // Act & Assert
-            Action act = () => survey.UpdateDetails(newTitle, newDescription, newStartDate, newEndDate);
+            Action act = () => survey.Update(newTitle, newDescription, newStartDate, newEndDate);
             act.Should()
                 .Throw<DomainException>()
                 .WithMessage("Only surveys in Draft status can be updated.");
@@ -103,7 +103,7 @@ namespace SurveySystem.Domain.Tests.Surveys
             DateTimeOffset newStartDate = DateTimeOffset.Now.AddDays(1);
             DateTimeOffset newEndDate = newStartDate.AddDays(20);
             // Act & Assert
-            Action act = () => survey.UpdateDetails(newTitle, newDescription, newStartDate, newEndDate);
+            Action act = () => survey.Update(newTitle, newDescription, newStartDate, newEndDate);
             act.Should()
                 .Throw<DomainException>()
                 .WithMessage("Title cannot be null or empty.");
@@ -119,7 +119,7 @@ namespace SurveySystem.Domain.Tests.Surveys
             DateTimeOffset newStartDate = DateTimeOffset.Now.AddDays(10);
             DateTimeOffset newEndDate = newStartDate.AddDays(-1);
             // Act & Assert
-            Action act = () => survey.UpdateDetails(newTitle, newDescription, newStartDate, newEndDate);
+            Action act = () => survey.Update(newTitle, newDescription, newStartDate, newEndDate);
             act.Should()
                 .Throw<DomainException>()
                 .WithMessage("End date must be later than start date.");

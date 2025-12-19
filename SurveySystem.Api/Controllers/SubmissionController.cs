@@ -47,7 +47,7 @@ namespace SurveySystem.Api.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> CreateSubmission([NotEmptyGuid(ErrorMessage = "SurveyId must not be empty.")] Guid surveyId, [FromBody] CreateSubmissionRequest request)
+        public async Task<IActionResult> Create([NotEmptyGuid(ErrorMessage = "SurveyId must not be empty.")] Guid surveyId, [FromBody] CreateSubmissionRequest request)
         {
             if (!ModelState.IsValid)
             {
@@ -98,7 +98,7 @@ namespace SurveySystem.Api.Controllers
                 await _submissionRepository.Add(submission);
 
                 var response = MapToSubmissionResponse(submission);
-                return CreatedAtAction(nameof(GetSubmissionById), new { id = response.Id }, response);
+                return CreatedAtAction(nameof(GetById), new { id = response.Id }, response);
             }
             catch (DomainException ex)
             {
@@ -121,7 +121,7 @@ namespace SurveySystem.Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetSubmissionById([NotEmptyGuid(ErrorMessage = "SurveyId must not be empty.")] Guid id)
+        public async Task<IActionResult> GetById([NotEmptyGuid(ErrorMessage = "SurveyId must not be empty.")] Guid id)
         {
             try
             {
@@ -149,7 +149,7 @@ namespace SurveySystem.Api.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetAllSubmissions([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
+        public async Task<IActionResult> GetAll([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
         {
             try
             {

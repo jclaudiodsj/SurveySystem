@@ -53,7 +53,7 @@ namespace SurveySystem.Domain.Surveys
                 throw new DomainException("Title cannot be null or empty.");
         }
 
-        public void UpdateDetails(string Title, string Description, DateTimeOffset StartDate, DateTimeOffset EndDate)
+        public void Update(string Title, string Description, DateTimeOffset StartDate, DateTimeOffset EndDate)
         {
             if (Status != SurveyStatus.Draft)
                 throw new DomainException("Only surveys in Draft status can be updated.");

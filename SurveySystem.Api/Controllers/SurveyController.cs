@@ -63,7 +63,7 @@ namespace SurveySystem.Api.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> CreateSurvey([FromBody] CreateSurveyRequest request)
+        public async Task<IActionResult> Create([FromBody] CreateSurveyRequest request)
         {
             if (!ModelState.IsValid)
             {
@@ -84,7 +84,7 @@ namespace SurveySystem.Api.Controllers
                 await _surveyRepository.Add(survey);
 
                 var response = MapToSurveyResponse(survey);
-                return CreatedAtAction(nameof(GetSurveyById), new { id = response.Id }, response);
+                return CreatedAtAction(nameof(GetById), new { id = response.Id }, response);
             }
             catch (DomainException ex)
             {
@@ -109,7 +109,7 @@ namespace SurveySystem.Api.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> UpdateSurvey([NotEmptyGuid(ErrorMessage = "Id must not be empty.")] Guid id, [FromBody] UpdateSurveyRequest request)
+        public async Task<IActionResult> Update([NotEmptyGuid(ErrorMessage = "Id must not be empty.")] Guid id, [FromBody] UpdateSurveyRequest request)
         {
             if (!ModelState.IsValid)
             {
@@ -123,7 +123,7 @@ namespace SurveySystem.Api.Controllers
                 if (survey is null)
                     return NotFound(new { message = $"Survey with ID {id} not found." });
 
-                survey.UpdateDetails(request.Title, request.Description, request.SurveyPeriod.StartDate, request.SurveyPeriod.EndDate);
+                survey.Update(request.Title, request.Description, request.SurveyPeriod.StartDate, request.SurveyPeriod.EndDate);
 
                 await _surveyRepository.Update(survey);
 
@@ -151,7 +151,7 @@ namespace SurveySystem.Api.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> DeleteSurvey([NotEmptyGuid(ErrorMessage = "Id must not be empty.")] Guid id)
+        public async Task<IActionResult> Delete([NotEmptyGuid(ErrorMessage = "Id must not be empty.")] Guid id)
         {
             try
             {
@@ -351,7 +351,7 @@ namespace SurveySystem.Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetSurveyById([NotEmptyGuid(ErrorMessage = "Id must not be empty.")] Guid id)
+        public async Task<IActionResult> GetById([NotEmptyGuid(ErrorMessage = "Id must not be empty.")] Guid id)
         {
             try
             {
@@ -379,7 +379,7 @@ namespace SurveySystem.Api.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetAllSurveys([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
+        public async Task<IActionResult> GetAll([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
         {
             try
             {
