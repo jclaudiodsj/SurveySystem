@@ -43,7 +43,7 @@ namespace SurveySystem.Infrastructure.Data
 
                     qb.OwnsMany(typeof(Option), "_options", ob =>
                     {
-                        ob.WithOwner().HasForeignKey("QuestionId");
+                        ob.WithOwner().HasForeignKey("QuestionText");
 
                         ob.Property<int>("Id");
                         ob.HasKey("Id");
@@ -67,8 +67,8 @@ namespace SurveySystem.Infrastructure.Data
                     ab.Property<int>("Id");
                     ab.HasKey("Id");
 
-                    ab.Property(a => a.QuestionId).IsRequired();
-                    ab.Property(a => a.OptionId).IsRequired();
+                    ab.Property(a => a.QuestionText).IsRequired();
+                    ab.Property(a => a.OptionText).IsRequired();
                 });
             });
         }

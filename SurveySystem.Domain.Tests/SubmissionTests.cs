@@ -12,8 +12,8 @@ namespace SurveySystem.Domain.Tests
             DateTimeOffset submittedAt = DateTimeOffset.UtcNow;
             var answers = new List<Answer>
             {
-                Answer.Create(Guid.NewGuid(), Guid.NewGuid()),
-                Answer.Create(Guid.NewGuid(), Guid.NewGuid())
+                Answer.Create("Question 1", "Option 1"),
+                Answer.Create("Question 2", "Option 1")
             };
             // Act
             var submission = Submission.Create(surveyId, submittedAt, answers);

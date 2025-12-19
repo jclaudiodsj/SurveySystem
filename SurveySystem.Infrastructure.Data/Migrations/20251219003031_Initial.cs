@@ -50,8 +50,8 @@ namespace SurveySystem.Infrastructure.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    QuestionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    OptionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    QuestionText = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    OptionText = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     SubmissionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
@@ -94,14 +94,14 @@ namespace SurveySystem.Infrastructure.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Text = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Order = table.Column<int>(type: "int", nullable: false),
-                    QuestionId = table.Column<int>(type: "int", nullable: false)
+                    QuestionText = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Option", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Option_Question_QuestionId",
-                        column: x => x.QuestionId,
+                        name: "FK_Option_Question_QuestionText",
+                        column: x => x.QuestionText,
                         principalTable: "Question",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -113,9 +113,9 @@ namespace SurveySystem.Infrastructure.Data.Migrations
                 column: "SubmissionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Option_QuestionId",
+                name: "IX_Option_QuestionText",
                 table: "Option",
-                column: "QuestionId");
+                column: "QuestionText");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Question_SurveyId",

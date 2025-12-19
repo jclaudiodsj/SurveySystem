@@ -30,11 +30,11 @@ namespace SurveySystem.Domain.Surveys
 
             // Regra: múltipla escolha simples => no máximo 1 resposta por pergunta no mesmo envio.
             var duplicatedQuestion = listAnswers
-                .GroupBy(a => a.QuestionId)
+                .GroupBy(a => a.QuestionText)
                 .FirstOrDefault(g => g.Count() > 1);
 
             if (duplicatedQuestion is not null)
-                throw new DomainException($"Duplicate answers for QuestionId '{duplicatedQuestion.Key}' are not allowed.");
+                throw new DomainException($"Duplicate answers for QuestionText '{duplicatedQuestion.Key}' are not allowed.");
 
             var s = new Submission(SurveyId, SubmittedAt);
 

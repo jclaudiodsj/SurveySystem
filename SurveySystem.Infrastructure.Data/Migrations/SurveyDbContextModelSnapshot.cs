@@ -112,7 +112,7 @@ namespace SurveySystem.Infrastructure.Data.Migrations
                                     b2.Property<int>("Order")
                                         .HasColumnType("int");
 
-                                    b2.Property<int>("QuestionId")
+                                    b2.Property<int>("QuestionText")
                                         .HasColumnType("int");
 
                                     b2.Property<string>("Text")
@@ -121,12 +121,12 @@ namespace SurveySystem.Infrastructure.Data.Migrations
 
                                     b2.HasKey("Id");
 
-                                    b2.HasIndex("QuestionId");
+                                    b2.HasIndex("QuestionText");
 
                                     b2.ToTable("Option");
 
                                     b2.WithOwner()
-                                        .HasForeignKey("QuestionId");
+                                        .HasForeignKey("QuestionText");
                                 });
 
                             b1.Navigation("_options");
@@ -167,11 +167,13 @@ namespace SurveySystem.Infrastructure.Data.Migrations
 
                             SqlServerPropertyBuilderExtensions.UseIdentityColumn(b1.Property<int>("Id"));
 
-                            b1.Property<Guid>("OptionId")
-                                .HasColumnType("uniqueidentifier");
+                            b1.Property<string>("OptionText")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
 
-                            b1.Property<Guid>("QuestionId")
-                                .HasColumnType("uniqueidentifier");
+                            b1.Property<string>("QuestionText")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
 
                             b1.Property<Guid>("SubmissionId")
                                 .HasColumnType("uniqueidentifier");

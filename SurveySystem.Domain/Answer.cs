@@ -4,30 +4,30 @@ namespace SurveySystem.Domain
 {
     public class Answer : ValueObject
     {
-        public Guid QuestionId { get; private set; }
-        public Guid OptionId { get; private set; }
+        public string QuestionText { get; private set; }
+        public string OptionText { get; private set; }
 
-        private Answer(Guid QuestionId, Guid OptionId)
+        private Answer(string QuestionText, string OptionText)
         {
-            this.QuestionId = QuestionId;
-            this.OptionId = OptionId;
+            this.QuestionText = QuestionText;
+            this.OptionText = OptionText;
         }
 
-        public static Answer Create(Guid questionId, Guid optionId)
+        public static Answer Create(string questionText, string optionText)
         {
-            if (questionId == Guid.Empty)
-                throw new DomainException("QuestionId cannot be empty.");
+            if (string.IsNullOrEmpty(questionText))
+                throw new DomainException("QuestionText cannot be empty.");
 
-            if (optionId == Guid.Empty)
-                throw new DomainException("OptionId cannot be empty.");
+            if (string.IsNullOrEmpty(optionText))
+                throw new DomainException("OptionText cannot be empty.");
 
-            return new Answer(questionId, optionId);
+            return new Answer(questionText, optionText);
         }
 
         protected override IEnumerable<object> GetEqualityComponents()
         {
-            yield return QuestionId;
-            yield return OptionId;
+            yield return QuestionText;
+            yield return OptionText;
         }
     }
 }
