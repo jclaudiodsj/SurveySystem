@@ -56,12 +56,12 @@ namespace SurveySystem.Infrastructure.Data.Tests
                                                 .FirstOrDefaultAsync(s => s.Id == survey.Id);
 
             Assert.NotNull(retrievedSurvey);
-            Assert.Equal(survey.Title, retrievedSurvey.Title);
-            Assert.Equal(survey.Description, retrievedSurvey.Description);
-            Assert.Single(retrievedSurvey.Questions);
-            Assert.Equal(survey.Questions[0].Text, retrievedSurvey.Questions[0].Text);
-            Assert.Equal(survey.Questions[0].Options.Count, retrievedSurvey.Questions[0].Options.Count);
-            Assert.Equal(survey.Questions[0].Options[0], retrievedSurvey.Questions[0].Options[0]);
+            Assert.Equal(survey.Title, retrievedSurvey!.Title);
+            Assert.Equal(survey.Description, retrievedSurvey!.Description);
+            Assert.Single(retrievedSurvey!.Questions);
+            Assert.Equal(survey.Questions[0].Text, retrievedSurvey!.Questions[0].Text);
+            Assert.Equal(survey.Questions[0].Options.Count, retrievedSurvey!.Questions[0].Options.Count);
+            Assert.Equal(survey.Questions[0].Options[0], retrievedSurvey!.Questions[0].Options[0]);
         }
 
         [Fact]
@@ -126,8 +126,8 @@ namespace SurveySystem.Infrastructure.Data.Tests
             var retrievedSurvey = await _repositorySurvey.GetById(survey.Id);
             // Assert
             Assert.NotNull(retrievedSurvey);
-            Assert.Equal(survey.Title, retrievedSurvey.Title);
-            Assert.Equal(survey.Description, retrievedSurvey.Description);
+            Assert.Equal(survey.Title, retrievedSurvey!.Title);
+            Assert.Equal(survey.Description, retrievedSurvey!.Description);
         }
 
         [Fact]

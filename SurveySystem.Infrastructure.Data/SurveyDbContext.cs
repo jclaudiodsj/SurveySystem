@@ -32,7 +32,7 @@ namespace SurveySystem.Infrastructure.Data
                     qb.WithOwner().HasForeignKey("SurveyId");
 
                     // chave sombra para itens da coleção
-                    qb.Property<int>("Id");
+                    qb.Property<int>("Id").ValueGeneratedOnAdd();
                     qb.HasKey("Id");
 
                     qb.Property("Text").IsRequired();
@@ -44,7 +44,7 @@ namespace SurveySystem.Infrastructure.Data
                     qb.OwnsMany(typeof(Option), "_options", ob =>
                     {
                         ob.WithOwner().HasForeignKey("QuestionId");
-                        ob.Property<int>("Id");
+                        ob.Property<int>("Id").ValueGeneratedOnAdd();
                         ob.HasKey("Id");
 
                         ob.Property("Text").IsRequired();
@@ -63,7 +63,7 @@ namespace SurveySystem.Infrastructure.Data
                 b.OwnsMany(x => x.Answers, ab =>
                 {
                     ab.WithOwner().HasForeignKey("SubmissionId");
-                    ab.Property<int>("Id");
+                    ab.Property<int>("Id").ValueGeneratedOnAdd();
                     ab.HasKey("Id");
 
                     ab.Property(a => a.QuestionText).IsRequired();

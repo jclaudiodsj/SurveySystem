@@ -7,7 +7,7 @@ namespace SurveySystem.Domain.Repositories
         Task Add(Survey survey);
         Task Update(Survey survey);
         Task Delete(Guid surveyId);
-        Task<Survey> GetById(Guid surveyId);
+        Task<Survey?> GetById(Guid surveyId);
         Task<List<Survey>> GetAll();
         Task<bool> Exists(Guid surveyId);        
     }

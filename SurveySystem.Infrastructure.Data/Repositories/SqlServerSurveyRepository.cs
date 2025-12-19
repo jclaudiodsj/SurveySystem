@@ -21,7 +21,6 @@ namespace SurveySystem.Infrastructure.Data.Repositories
 
         public async Task Update(Survey survey)
         {
-            _context.Surveys.Update(survey);
             await _context.SaveChangesAsync();
         }
 
@@ -39,17 +38,22 @@ namespace SurveySystem.Infrastructure.Data.Repositories
         public async Task<List<Survey>> GetAll()
         {
             return await _context.Surveys
-                .Include(c => c.Questions)
+                .Include(s => s.Questions)
+                // Options é uma owned collection mapeada no field "_options".
+                // Usamos string-based Include para alcançar membros privados.
+                .Include("Questions._options")
                 .AsNoTracking()
                 .ToListAsync();
         }
 
-        public async Task<Survey> GetById(Guid id)
+        public async Task<Survey?> GetById(Guid id)
         {
             return await _context.Surveys
-                .Include(c => c.Questions)
-                .AsNoTracking()
-                .FirstOrDefaultAsync(c => c.Id == id);
+                // IMPORTANT: Não use AsNoTracking aqui, pois esse método é usado em fluxos de alteração (PUT/POST).
+                // Owned collections com shadow keys (ex.: Questions/Options) exigem entidades rastreadas para preservar as chaves.
+                .Include(s => s.Questions)
+                .Include("Questions._options")
+                .FirstOrDefaultAsync(s => s.Id == id);
         }
 
         public async Task<bool> Exists(Guid surveyId)
