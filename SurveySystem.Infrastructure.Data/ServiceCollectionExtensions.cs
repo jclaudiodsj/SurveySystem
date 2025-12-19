@@ -25,9 +25,10 @@ namespace SurveySystem.Infrastructure
             services.AddDbContext<SurveyDbContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("Default")));
 
-            // Registra o repositório de clientes para injeção de dependência.
+            // Registra o repositório de pesquisas para injeção de dependência.
             // Scoped significa que uma nova instância será criada por requisição.
             services.AddScoped<ISurveyRepository, SqlServerSurveyRepository>();
+            services.AddScoped<ISubmissionRepository, SqlServerSubmissionRepository>();
 
             return services;
         }

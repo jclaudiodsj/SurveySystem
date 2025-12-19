@@ -1,18 +1,16 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SurveySystem.Domain.Submissions;
 using SurveySystem.Domain.Surveys;
 using SurveySystem.Infrastructure.Data.Repositories;
 
 namespace SurveySystem.Infrastructure.Data.Tests
 {
-    // A classe de testes para o SqlServerCustomerRepository.
+    // A classe de testes para o SqlServerSurveyRepository.
     // Utiliza IClassFixture para compartilhar o setup do DbContext em memória entre os testes,
     // garantindo que cada teste comece com um estado limpo.
     public class SqlServerSurveyRepositoryTests : IClassFixture<SurveySystemRepositoryTestFixture>
     {
         private readonly SurveySystemRepositoryTestFixture _fixture;
-        private readonly SqlServerSurveyRepository _repositorySurvey;
-        private readonly SqlServerSubmissionRepository _repositorySubmission;
+        private readonly SqlServerSurveyRepository _repositorySurvey;        
         private readonly SurveyDbContext _context;
 
         public SqlServerSurveyRepositoryTests(SurveySystemRepositoryTestFixture fixture)
@@ -25,7 +23,6 @@ namespace SurveySystem.Infrastructure.Data.Tests
 
             _context = _fixture.DbContext;
             _repositorySurvey = new SqlServerSurveyRepository(_context);
-            _repositorySubmission = new SqlServerSubmissionRepository(_context);
         }
 
         // Helper para criar uma enquete de teste com dados padrão.
@@ -144,93 +141,6 @@ namespace SurveySystem.Infrastructure.Data.Tests
             var exists = await _context.Surveys.AnyAsync(s => s.Id == survey.Id);
             // Assert
             Assert.True(exists);
-        }
-
-        [Fact]
-        public async Task AddAsyncSubmissionShouldAddSuccessfully()
-        {
-            // Arrange
-            var survey = CreateTestSurvey("Customer Satisfaction", "Survey about customer satisfaction", "How satisfied are you with our service?");
-            // Persist survey first because Submission references SurveyId (foreign key).
-            await _context.Surveys.AddAsync(survey);
-            await _context.SaveChangesAsync();
-
-            var questionText = survey.Questions[0].Text;
-            var answers = new List<Answer>
-            {
-                Answer.Create(questionText, "Option 1")
-            };
-
-            var submission = Submission.Create(survey.Id, DateTimeOffset.UtcNow, answers);
-
-            // Act
-            await _repositorySubmission.Add(submission);
-            await _context.SaveChangesAsync();
-
-            // Assert
-            var retrieved = await _context.Submissions
-                                          .Include(s => s.Answers)
-                                          .AsNoTracking()
-                                          .FirstOrDefaultAsync(s => s.Id == submission.Id);
-
-            Assert.NotNull(retrieved);
-            Assert.Equal(submission.SurveyId, retrieved.SurveyId);
-            Assert.Equal(submission.SubmittedAt, retrieved.SubmittedAt);
-            Assert.Single(retrieved.Answers);
-            Assert.Equal(answers[0].QuestionText, retrieved.Answers[0].QuestionText);
-            Assert.Equal(answers[0].OptionText, retrieved.Answers[0].OptionText);
-        }
-
-        [Fact]
-        public async Task GetSubmissionByIdAsyncShouldReturnSubmission()
-        {
-            // Arrange
-            var survey = CreateTestSurvey("Employee Feedback", "Survey about employee feedback", "How do you rate your work environment?");
-            await _context.Surveys.AddAsync(survey);
-            await _context.SaveChangesAsync();
-            var questionText = survey.Questions[0].Text;
-            var answers = new List<Answer>
-            {
-                Answer.Create(questionText, "Option 2")
-            };
-            var submission = Submission.Create(survey.Id, DateTimeOffset.UtcNow, answers);
-            await _repositorySubmission.Add(submission);
-            await _context.SaveChangesAsync();
-            // Act
-            var retrieved = await _repositorySubmission.GetById(submission.Id);
-            // Assert
-            Assert.NotNull(retrieved);
-            Assert.Equal(submission.SurveyId, retrieved.SurveyId);
-            Assert.Equal(submission.SubmittedAt, retrieved.SubmittedAt);
-            Assert.Single(retrieved.Answers);
-            Assert.Equal(answers[0].QuestionText, retrieved.Answers[0].QuestionText);
-            Assert.Equal(answers[0].OptionText, retrieved.Answers[0].OptionText);
-        }
-
-        [Fact]
-        public async Task GetSubmissionsBySurveyIdAsyncShouldReturnSubmissions()
-        {
-            // Arrange
-            var survey = CreateTestSurvey("Product Usage", "Survey about product usage", "How often do you use our product?");
-            await _context.Surveys.AddAsync(survey);
-            await _context.SaveChangesAsync();
-            var questionText = survey.Questions[0].Text;
-            var submission1 = Submission.Create(survey.Id, DateTimeOffset.UtcNow, new List<Answer>
-            {
-                Answer.Create(questionText, "Option 1")
-            });
-            var submission2 = Submission.Create(survey.Id, DateTimeOffset.UtcNow, new List<Answer>
-            {
-                Answer.Create(questionText, "Option 2")
-            });
-            await _repositorySubmission.Add(submission1);
-            await _repositorySubmission.Add(submission2);
-            await _context.SaveChangesAsync();
-            // Act
-            var submissions = await _repositorySubmission.GetBySurveyId(survey.Id);
-            // Assert
-            Assert.NotNull(submissions);
-            Assert.True(submissions.Count >= 2);
         }
     }
 }

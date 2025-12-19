@@ -15,9 +15,10 @@ namespace SurveySystem.Infrastructure.Data.Tests
         public SurveyDbContext DbContext { get; private set; }
 
         /// <summary>
-        /// Repositório Survey a ser testado.
+        /// Repositórios a serem testados.
         /// </summary>
         public SqlServerSurveyRepository SurveyRepository { get; private set; }
+        public SqlServerSubmissionRepository SubmissionRepository { get; private set; }
 
         /// <summary>
         /// Inicializa o ambiente de teste de forma assíncrona.
@@ -38,8 +39,9 @@ namespace SurveySystem.Infrastructure.Data.Tests
             // Para bancos de dados reais, isso seria 'MigrateAsync()'.
             await DbContext.Database.EnsureCreatedAsync();
 
-            // Instancia o repositório de clientes com o DbContext criado.
+            // Instancia os repositórios com o DbContext criado.
             SurveyRepository = new SqlServerSurveyRepository(DbContext);
+            SubmissionRepository = new SqlServerSubmissionRepository(DbContext);
         }
 
         /// <summary>
@@ -53,13 +55,14 @@ namespace SurveySystem.Infrastructure.Data.Tests
         }
 
         /// <summary>
-        /// Limpa todos os dados da tabela de enquete no banco de dados em memória.
+        /// Limpa todos os dados das tabelas no banco de dados em memória.
         /// Este método deve ser chamado antes de cada teste individual que precise de um estado limpo.
         /// </summary>
         public async Task ClearDataAsync()
         {
-            // Remove todos os clientes existentes no banco de dados.
+            // Remove os dados existentes no banco de dados.
             DbContext.Surveys.RemoveRange(DbContext.Surveys);
+            DbContext.Submissions.RemoveRange(DbContext.Submissions);
 
             // Salva as mudanças para efetivar a remoção.
             await DbContext.SaveChangesAsync();

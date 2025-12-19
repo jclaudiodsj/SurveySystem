@@ -12,7 +12,7 @@ using SurveySystem.Infrastructure.Data;
 namespace SurveySystem.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(SurveyDbContext))]
-    [Migration("20251219010755_Initial")]
+    [Migration("20251219021007_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -25,7 +25,24 @@ namespace SurveySystem.Infrastructure.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("SurveySystem.Domain.Survey", b =>
+            modelBuilder.Entity("SurveySystem.Domain.Submissions.Submission", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset>("SubmittedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<Guid>("SurveyId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Submissions");
+                });
+
+            modelBuilder.Entity("SurveySystem.Domain.Surveys.Survey", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -58,26 +75,43 @@ namespace SurveySystem.Infrastructure.Data.Migrations
                     b.ToTable("Surveys");
                 });
 
-            modelBuilder.Entity("SurveySystem.Domain.Surveys.Submission", b =>
+            modelBuilder.Entity("SurveySystem.Domain.Submissions.Submission", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                    b.OwnsMany("SurveySystem.Domain.Submissions.Answer", "Answers", b1 =>
+                        {
+                            b1.Property<int>("Id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("int");
 
-                    b.Property<DateTimeOffset>("SubmittedAt")
-                        .HasColumnType("datetimeoffset");
+                            SqlServerPropertyBuilderExtensions.UseIdentityColumn(b1.Property<int>("Id"));
 
-                    b.Property<Guid>("SurveyId")
-                        .HasColumnType("uniqueidentifier");
+                            b1.Property<string>("OptionText")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                            b1.Property<string>("QuestionText")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
 
-                    b.ToTable("Submissions");
+                            b1.Property<Guid>("SubmissionId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.HasKey("Id");
+
+                            b1.HasIndex("SubmissionId");
+
+                            b1.ToTable("Answer");
+
+                            b1.WithOwner()
+                                .HasForeignKey("SubmissionId");
+                        });
+
+                    b.Navigation("Answers");
                 });
 
-            modelBuilder.Entity("SurveySystem.Domain.Survey", b =>
+            modelBuilder.Entity("SurveySystem.Domain.Surveys.Survey", b =>
                 {
-                    b.OwnsMany("SurveySystem.Domain.Question", "Questions", b1 =>
+                    b.OwnsMany("SurveySystem.Domain.Surveys.Question", "Questions", b1 =>
                         {
                             b1.Property<int>("Id")
                                 .ValueGeneratedOnAdd()
@@ -104,7 +138,7 @@ namespace SurveySystem.Infrastructure.Data.Migrations
                             b1.WithOwner()
                                 .HasForeignKey("SurveyId");
 
-                            b1.OwnsMany("SurveySystem.Domain.Option", "_options", b2 =>
+                            b1.OwnsMany("SurveySystem.Domain.Surveys.Option", "_options", b2 =>
                                 {
                                     b2.Property<int>("Id")
                                         .ValueGeneratedOnAdd()
@@ -135,7 +169,7 @@ namespace SurveySystem.Infrastructure.Data.Migrations
                             b1.Navigation("_options");
                         });
 
-                    b.OwnsOne("SurveySystem.Domain.SurveyPeriod", "Period", b1 =>
+                    b.OwnsOne("SurveySystem.Domain.Surveys.SurveyPeriod", "Period", b1 =>
                         {
                             b1.Property<Guid>("SurveyId")
                                 .HasColumnType("uniqueidentifier");
@@ -158,40 +192,6 @@ namespace SurveySystem.Infrastructure.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Questions");
-                });
-
-            modelBuilder.Entity("SurveySystem.Domain.Surveys.Submission", b =>
-                {
-                    b.OwnsMany("SurveySystem.Domain.Answer", "Answers", b1 =>
-                        {
-                            b1.Property<int>("Id")
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("int");
-
-                            SqlServerPropertyBuilderExtensions.UseIdentityColumn(b1.Property<int>("Id"));
-
-                            b1.Property<string>("OptionText")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.Property<string>("QuestionText")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.Property<Guid>("SubmissionId")
-                                .HasColumnType("uniqueidentifier");
-
-                            b1.HasKey("Id");
-
-                            b1.HasIndex("SubmissionId");
-
-                            b1.ToTable("Answer");
-
-                            b1.WithOwner()
-                                .HasForeignKey("SubmissionId");
-                        });
-
-                    b.Navigation("Answers");
                 });
 #pragma warning restore 612, 618
         }
