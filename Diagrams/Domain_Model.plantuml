@@ -1,0 +1,66 @@
+@startuml
+title Survey System - Domain Model (Aggregates)
+
+package "SurveySystem.Domain" {
+
+  class Survey <<AggregateRoot>> {
+    +Guid Id
+    +string Title
+    +string Description
+    +SurveyStatus Status
+    +SurveyPeriod Period
+    +IReadOnlyList<Question> Questions
+    +DateTimeOffset CreatedAt
+    +DateTimeOffset? UpdatedAt
+    +DateTimeOffset? PublishedAt
+    +DateTimeOffset? ClosedAt
+    --
+    +Update(title, description, startDate, endDate)
+    +AddQuestion(text, options)
+    +RemoveQuestion(text)
+    +Publish()
+    +Close()
+  }
+
+  class SurveyPeriod <<ValueObject>> {
+    +DateTimeOffset StartDate
+    +DateTimeOffset EndDate
+  }
+
+  class Question <<ValueObject>> {
+    +string Text
+    +int Order
+    +IReadOnlyList<Option> Options
+  }
+
+  class Option <<ValueObject>> {
+    +string Text
+    +int Order
+  }
+
+  class Submission <<AggregateRoot>> {
+    +Guid Id
+    +Guid SurveyId
+    +DateTimeOffset SubmittedAt
+    +IReadOnlyList<Answer> Answers
+  }
+
+  class Answer <<ValueObject>> {
+    +string QuestionText
+    +string OptionText
+  }
+
+  enum SurveyStatus {
+    Draft
+    Published
+    Closed
+  }
+
+  Survey "1" o-- "1" SurveyPeriod : has
+  Survey "1" o-- "*" Question : contains
+  Question "1" o-- "*" Option : contains
+
+  Submission "*" --> "1" Survey : references by SurveyId
+  Submission "1" o-- "*" Answer : contains
+}
+@enduml

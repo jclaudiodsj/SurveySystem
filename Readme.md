@@ -1,91 +1,241 @@
 # 🚀 Sistema de Enquetes (Survey System)
 
-## 1. APRESENTAÇÃO DO PROJETO
+## 1. Apresentação do projeto
 
-Este projeto é um sistema de gestão de enquetes desenvolvido com ASP.NET Core 9, seguindo os princípios do Domain-Driven Design (DDD). Ele oferece uma API RESTful para realizar operações CRUD (Create, Read, Update, Delete) em dados de enquetes, incluindo título, descrição, período e as perguntas que a compõem e também permitindo a submissão de respostas e a captura do resultado.
+Este projeto implementa uma **API REST** para gerenciamento de **enquetes/pesquisas públicas** (surveys) com perguntas de **múltipla escolha**, permitindo a **submissão anônima** de respostas e a **apuração sumarizada** dos resultados.  
+A solução foi construída com **.NET 9 / ASP.NET Core Web API** e **Entity Framework Core**, utilizando **SQL Server LocalDB** para persistência.
 
-### Objetivo Principal e Escopo
-O objetivo principal deste projeto é demonstrar a aplicação prática de conceitos avançados de arquitetura de software que foram estudados durante a disciplina "Arquitetura .NET" do "MIT em Arquitetura de Software", como DDD, padrões de projeto e Entity Framework Core, em um cenário de negócios comum: um sistema para enquete/questionário. O escopo abrange o sistema de questionários online que terá como finalidade principal a elaboração de pesquisas públicas. Um dos alvos é pesquisa pública sobre as eleições, onde seriam feitos anúncios em diversas redes sociais convidando as pessoas a responderem a pesquisa. O questionário teria uma estrutura simples de perguntas com resposta no modelo múltipla escolha. Como o alvo das pesquisas são milhões de pessoas, é preciso se preocupar com questões de escala também. Depois do período de coleta de respostas, o sistema deve disponibilizar de forma sumarizada, para alguns usuários, o resultado da pesquisa.
+### Objetivo principal e escopo
 
-### O que o Projeto Faz
-O sistema permite:
-- **Cadastrar enquetes** com informações básicas e múltiplas perguntas.
-- **Atualizar enquetes**, incluindo suas perguntas.
-- **Consultar enquetes** individualmente ou em lista.
-- **Publicar enquete**.
-- **Submeter respostas de maneira anônima**.
-- **Consultar submissões** individualmente ou em lista.
-- **Capturar o resultada das enquetes** individualmente, onde também é apresentado o resultado com quantidade de votos e percentual.
-- **Encerrar enquete**.
-- **Deletar enquete**.
-- **Deletar todas enquetes**.
-- **Deletar todas submissões**.
+- **Objetivo**: disponibilizar uma API capaz de suportar a criação, publicação e encerramento de pesquisas, bem como o recebimento de submissões e a consulta de resultados.
+- **Escopo do trabalho**: implementação de back-end com testes e documentação; **front-end foi dispensado** (ver justificativa na Rubrica 2).
 
-### Para Quem É
-Este projeto é ideal para:
-- **Estudantes e desenvolvedores** que desejam aprofundar seus conhecimentos em ASP.NET Core, Entity Framework Core e, principalmente, Domain-Driven Design.
-- **Professores e instrutores** como material didático para demonstrar boas práticas de arquitetura e desenvolvimento de software.
-- **Equipes de desenvolvimento** que buscam um exemplo claro de como estruturar uma aplicação com DDD.
+### Principais funcionalidades
 
-### Por Que Foi Criado
-Foi criado para validar os conceitos que aprendi durante aula, onde abordamos diversos conceitos de arquitetura de software aplicado a plataforma .Net. Foi dada atenção especial a importancia de DDD (Domain-Driven-Design) e como ele afeta toda a solução desenvolvida, o que certamente foi o maior desafio deste projeto. Além disso, este projeto aplica padrões de repositório e melhores práticas de organização da solution.
+- Criar, atualizar, consultar e excluir pesquisas (surveys)
+- Adicionar e remover questões (questions) em uma pesquisa (enquanto rascunho)
+- Publicar e encerrar pesquisas
+- Submeter respostas (submissions) de forma anônima
+- Consultar resultado sumarizado por pesquisa
 
-## 2. ARQUITETURA E DESIGN
+---
 
-A arquitetura do projeto segue o padrão de **Arquitetura em Camadas (Layered Architecture)**, com forte influência do **Domain-Driven Design (DDD)**. Isso garante uma separação clara de responsabilidades, facilitando a manutenção, testabilidade e escalabilidade da aplicação.
+## 2. Arquitetura e design
 
-### Explicação Completa da Arquitetura em Camadas
+A solução foi organizada em uma abordagem inspirada em **Arquitetura em Camadas / Clean Architecture**, separando responsabilidades e melhorando manutenibilidade e testabilidade:
 
-#### 1. **SurveySystem.Domain (Camada de Domínio)**
-- **Coração da aplicação.** Contém a lógica de negócios, entidades, Value Objects, agregados e interfaces de repositório.
-- **Independente de qualquer tecnologia de infraestrutura ou UI.** Não conhece banco de dados, frameworks web, etc.
-- **Foco:** Modelar o problema de negócio de forma rica e expressiva.
+- **SurveySystem.Domain**: regras de negócio (DDD), agregados, Value Objects e contratos de repositório
+- **SurveySystem.Infrastructure.Data**: persistência com EF Core (DbContext, mapeamentos e repositórios)
+- **SurveySystem.Api**: camada Web (Controllers, DTOs, validação, Swagger) e composição via DI
+- **Tests**:
+  - **SurveySystem.Domain.Tests**: testes das regras do domínio (xUnit + FluentAssertions)
+  - **SurveySystem.Infrastructure.Data.Tests**: testes de repositórios com EF Core (provider InMemory)
 
-#### 2. **SurveySystem.Infrastructure.Data (Camada de Infraestrutura)**
-- **Responsável pela persistência de dados e outras preocupações técnicas.**
-- Implementa as interfaces de repositório definidas na camada de Domínio.
-- Utiliza Entity Framework Core para interagir com o banco de dados (SQL Server LocalDB).
-- Contém configurações de mapeamento de entidades para o banco de dados.
+### Fluxo típico de uma requisição
 
-#### 3. **SurveySystem.API (Camada de Apresentação/Aplicação)**
-- **Ponto de entrada da aplicação.** Expõe a funcionalidade de negócio através de uma API RESTful.
-- Contém controladores (Controllers) que recebem requisições HTTP, orquestram as operações de domínio e retornam respostas HTTP.
-- Utiliza DTOs (Data Transfer Objects) para desacoplar a API do modelo de domínio.
-- Configura a injeção de dependência e o pipeline da aplicação (middleware).
+1. **Cliente (Postman/Swagger/UI futura)** envia requisição HTTP (JSON).
+2. **API (Controller)** valida DTOs (DataAnnotations) e traduz para comandos do domínio.
+3. **Domínio** executa regras de negócio (ex.: publicar, fechar, validar opções/período).
+4. **Repositório (Infra)** persiste/consulta via **EF Core** no **SQL Server LocalDB**.
+5. **API** devolve resposta HTTP (200/201/204/400/404/500) com DTOs de resposta.
 
-#### 4. **SurveySystem.Infrastructure.Tests (Camada de Testes de Infraestrutura)**
-- Contém testes unitários para a implementação do repositório, garantindo que a persistência de dados funcione corretamente.
+---
 
-#### 5. **SurveySystem.Domain.Tests (Camada de Testes de Domínio)**
-- Contém testes unitários para as entidades e Value Objects do domínio, garantindo que a lógica de negócio esteja correta e robusta.
+## 3. Como executar
 
-### Padrões de Projeto Utilizados
+### Pré-requisitos
+- Visual Studio 2022
+- .NET SDK 9
+- SQL Server LocalDB (ou SQL Server compatível)
+- (Opcional) Postman
 
--   **Domain-Driven Design (DDD)**: Foco na modelagem do domínio de negócio, com linguagem ubíqua e conceitos de Aggregate Roots, Value Objects e Repositories.
--   **Repository Pattern**: Abstrai a lógica de persistência de dados, permitindo que a camada de domínio trabalhe com coleções de objetos sem se preocupar com os detalhes do armazenamento.
--   **Factory Pattern**: Utilizado nos métodos `Create` dos Value Objects e Aggregate Roots para encapsular a lógica de criação e validação, garantindo que os objetos sejam sempre criados em um estado válido.
--   **Value Object Pattern**: Objetos que representam um conceito descritivo no domínio, definidos pela sua composição de atributos e comparados por valor, não por identidade. São imutáveis.
--   **Aggregate Root Pattern**: Entidades que são a raiz de um cluster de objetos (Aggregate), garantindo a consistência transacional dentro do agregado. Todas as operações externas devem passar pela Aggregate Root.
--   **Dependency Injection (DI)**: Utilizado para gerenciar as dependências entre as camadas e componentes, promovendo o baixo acoplamento e a testabilidade.
--   **Fluent API (EF Core)**: Usada para configurar o mapeamento objeto-relacional no Entity Framework Core, permitindo mapear Value Objects complexos para o banco de dados.
--   **RESTful API**: A camada de API segue os princípios REST para comunicação entre cliente e servidor, utilizando verbos HTTP e URLs semânticas.
+### String de conexão
+No projeto **SurveySystem.Api**, configure `appsettings.json`:
 
-### Fluxo de Dados Completo
+```json
+{
+  "ConnectionStrings": {
+    "Default": "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=SurveySystemDb;Integrated Security=true;"
+  }
+}
+```
 
-1.  **Requisição HTTP (API)**: Um cliente (ex: frontend, Postman) envia uma requisição HTTP (POST, GET, PUT, DELETE) para um endpoint da `SurveySystem.API`.
-2.  **Controller (API)**: O `SurveyController` ou `SubmissionController`  recebe a requisição, valida os DTOs de entrada e, se necessário, converte-os para o formato esperado pelo domínio.
-3.  **Serviço de Aplicação (API/Domínio)**: O Controller invoca métodos na camada de Domínio (através da interface do repositório) para executar a lógica de negócio.
-4.  **Aggregate Root (Domínio)**: O `Survey` ou `Submission` (Aggregate Root) executa as regras de negócio, manipula seus Value Objects (`SurveyStatus`, `SurveyPerior`, `Question`, `Option` para `Survey` e `Answer` para `Submission`) e garante a consistência interna.
-5.  **Repositório (Domínio/Infraestrutura)**: As interfaces `ISurveyRepository` e `ISubmissionRepository` é invocada. As implementações `SqlServerSurveyRepository` e `SqlServerSubmissionRepository`, respectivamente (na camada de Infraestrutura), traduz as operações de domínio em operações de banco de dados.
-6.  **Entity Framework Core (Infraestrutura)**: O EF Core, usando o `SurveySystemDbContext` e as configurações da `CustomerConfiguration`, interage com o SQL Server LocalDB para persistir ou recuperar os dados.
-7.  **Resposta (Infraestrutura/Domínio/API)**: Os dados são retornados do banco, convertidos de volta para objetos de domínio, e então para DTOs de resposta pela API, que são enviados de volta ao cliente como uma resposta HTTP.
+### Migrações e banco
+No **Package Manager Console**:
 
-### Decisões importantes ao longo do projeto
+```powershell
+Add-Migration Initial -Project SurveySystem.Infrastructure.Data -StartupProject SurveySystem.Api
+Update-Database -Project SurveySystem.Infrastructure.Data -StartupProject SurveySystem.Api
+```
 
-1. ... 
-2. ...
-3. ...
+### Executar a API
+- Defina **SurveySystem.Api** como Startup Project
+- Rode em modo Debug
+- Acesse o Swagger em `http://localhost:5011/swagger/index.html`
 
-### Diagrama da Arquitetura
+---
 
-TO DO
+## 4. Testes
+
+- **Domínio**: `SurveySystem.Domain.Tests` (xUnit + FluentAssertions)
+- **Infraestrutura**: `SurveySystem.Infrastructure.Data.Tests` com EF Core provider **InMemory** (fixture `SurveySystemRepositoryTestFixture`)
+
+Executar:
+
+```powershell
+dotnet test
+```
+
+---
+
+## 5. Postman
+
+O projeto inclui uma collection do Postman:
+
+- `Survey System - Arq. .Net - José Cláudio de Souza Jr.postman_collection.json`
+
+Ela contém exemplos para:
+- CRUD de surveys
+- publicação/encerramento
+- submissão de respostas
+- consulta de resultados
+
+---
+
+# ✅ Rubricas do projeto
+
+A seguir estão as respostas objetivas para cada rubrica exigida.
+
+---
+
+## 1. Arquitetar e implementar serviços com a plataforma .NET
+
+### 1a. Componentes do .NET utilizados na solução
+- **.NET 9** como plataforma base (SDK/runtime)
+- **ASP.NET Core Web API** (Controllers, routing, model binding, middleware)
+- **Dependency Injection (DI)** nativa do ASP.NET Core (registrada em `AddInfrastructure`)
+- **Swagger/OpenAPI** via `AddSwaggerGen()` para documentação e testes manuais rápidos
+- **Logging** via `ILogger<T>` nos Controllers
+
+### 1b. Como a solução garante funcionamento e confiabilidade via componentes .NET
+- **Pipeline HTTP do ASP.NET Core** com `[ApiController]` + validação de modelo
+- **Tratamento de exceções** por try/catch nos Controllers para responder corretamente (400/500)
+- **DI + escopo por requisição** (`AddScoped`) para repositórios e DbContext
+- **Testes automatizados** (xUnit) cobrindo invariantes do domínio e operações de repositório
+
+### 1c. Componentes que atendem aos requisitos propostos
+- **Persistência**: EF Core + SQL Server LocalDB para armazenar pesquisas e submissões
+- **Escalabilidade (decisão pragmática)**:
+  - API stateless (escala horizontal)
+  - persistência relacional para consistência e auditoria
+  - endpoint de resultado sumariza as respostas por pesquisa
+- **Anonimato**: submissões não armazenam dados pessoais do respondente
+
+### 1d. Justificativa das escolhas arquiteturais
+- **ASP.NET Core**: stack nativa para o time (.NET/C#), rápida para entregar com qualidade.
+- **EF Core**: reduz tempo de entrega, gera migrations e integra naturalmente com .NET.
+- **Arquitetura por camadas**: separa regras de negócio de infraestrutura, facilitando testes e evolução.
+- **Swagger + Postman**: acelera validação funcional sem front-end (prazo curto).
+
+---
+
+## 2. Arquitetar e implementar sistemas Web com ASP.NET
+
+### 2a. Componente adequado para criação do front
+- O componente web adotado foi **ASP.NET Core Web API** (Controllers), pois o escopo do trabalho é back-end.
+- Para um front-end futuro, a integração seria via:
+  - Web App SPA (React/Angular/Vue) consumindo a API
+  - ou MVC/Razor Pages consumindo serviços internos (não implementado por escopo/prazo)
+  - **Minha escolha particular seria React, pois é que preciso mais me manter atualizado.**
+
+### 2b. Linguagem adequada pensando nos stakeholders
+- Para **desenvolvedores**: descrição técnica (ASP.NET Core, EF Core, DDD, DI, migrations).
+- Para **usuário do sistema**: descrição funcional (criar/publicar/enviar respostas/ver resultado).
+- A documentação busca equilíbrio: explica o fluxo de uso sem depender de conceitos avançados.
+
+### 2c. Como o componente web pode ser testado
+- **Swagger UI**: testes manuais rápidos (contrato HTTP, payloads e responses).
+- **Postman**: collection com cenários e exemplos (incluída no repositório).
+
+### 2d. Ao menos uma forma de testar os componentes do sistema
+- **Testes unitários do domínio**: garantem invariantes (ex.: publicar/fechar, validações de dados).
+- **Testes de repositório**: validam persistência e recuperação via DbContext.
+
+---
+
+## 3. Arquitetar e implementar acesso a dados com Entity Framework
+
+### 3a. Componente de acesso a dados escolhido
+- **Entity Framework Core** com provider **SQL Server**.
+
+### 3b. Relação do componente de dados com o requisito
+- O **DbContext (SurveySystemDbContext)** mapeia `Survey` e `Submission`.
+- O EF Core mantém:
+  - criação de schema via migrations
+  - persistência de agregados (Survey com Questions/Options; Submission com Answers)
+  - consultas para suportar o endpoint de resultado sumarizado
+
+### 3c. Justificativa da escolha
+- EF Core acelera a entrega:
+  - reduz boilerplate de SQL
+  - suporta migrations
+  - integra com DI e ASP.NET Core nativamente
+- Mantém o foco do projeto em arquitetura e domínio, sem perder pragmatismo.
+- O uso do EF Core também **desacopla a aplicação do banco de dados específico**, permitindo trocar o provider com impacto mínimo no código.
+- Embora neste projeto tenha sido utilizado o **Microsoft SQL Server**, a solução poderia ser facilmente adaptada para outros bancos relacionais suportados pelo EF Core, como **PostgreSQL**, **MySQL/MariaDB** ou **SQLite**, bastando alterar o provider e a string de conexão.
+- Essa decisão aumenta a **flexibilidade arquitetural** e reduz riscos de lock-in tecnológico.
+
+### 3d. Como o componente pode ser testado no diagrama/implementação
+- Os testes em `SurveySystem.Infrastructure.Data.Tests` usam EF Core provider **InMemory** para validar:
+  - Add/Get/Delete
+  - GetAll
+  - consultas por SurveyId (submissions)
+
+---
+
+## 4. Integração de back-end .NET com tecnologias front-end
+
+### 4a. Relação do front-end com o back-end
+- Não há front-end implementado por decisão de escopo/prazo.
+- A integração está demonstrada via **cliente HTTP** (Postman/Swagger), que representa o papel do front-end.
+
+### 4b. Justificativa da escolha do “front-end” (Postman)
+- O professor permitiu dispensar UI; o prazo curto prioriza back-end e arquitetura.
+- Postman permite validar:
+  - contrato REST
+  - payloads JSON
+  - cenários de erro/sucesso
+  - encadeamento de requests (criar → publicar → submeter → resultado)
+
+### 4c. Justificativa da escolha do back-end
+- **ASP.NET Core Web API** em .NET 9 foi escolhido por:
+  - alinhamento com o conhecimento do time (C#/.NET)
+  - produtividade e entrega rápida
+  - maturidade do ecossistema (Swagger, EF Core, testes)
+  - **multiplataforma**
+
+### 4d. Protocolo de comunicação entre front e back
+- **HTTP/HTTPS** com **JSON** (REST).
+- Endpoints seguem padrão REST (exemplos):
+  - `POST /Survey` (criar)
+  - `PUT /Survey/{id}` (atualizar)
+  - `POST /Survey/{id}/publish` (publicar)
+  - `POST /Survey/{id}/close` (encerrar)
+  - `POST /Submission?surveyId={id}` (submeter respostas)
+  - `GET /Survey/{id}/result` (resultado)
+
+---
+
+## 6. Diagramas (C4 Model)
+
+### 6a. Diagrama de Contexto
+![Diagrama de Contexto](./Diagrams/C4_Context_Diagram.png)
+
+### 6b. Diagrama de Container
+![Diagrama de Container](./Diagrams/C4_Container_Diagram.png)
+
+### 6c. Diagrama de Componente
+![Diagrama de Componente](./Diagrams/C4_Component_Diagram.png)
+
+## 7. Modelo de Domínio
+![Model Domain](./Diagrams/Domain_Model.png)

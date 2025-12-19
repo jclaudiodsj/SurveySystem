@@ -1,0 +1,20 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+
+title Survey System - C4 Context Diagram
+
+Person(publicRespondent, "Respondente (Público)", "Pessoa convidada via redes sociais para responder a pesquisa (anonimamente).")
+Person(researchAdmin, "Administrador / Analista", "Usuário autorizado a criar, publicar, encerrar pesquisas e consultar resultados sumarizados.")
+
+System(surveySystem, "Survey System (API)", "API REST em .NET 9 para criação de pesquisas, submissão anônima e apuração de resultados.")
+
+System_Ext(postman, "Postman / HTTP Client", "Cliente HTTP usado para testar e simular um front-end.")
+SystemDb(sqlServer, "SQL Server (LocalDB)", "Banco relacional para persistência de pesquisas e submissões.")
+
+Rel(publicRespondent, surveySystem, "Responde pesquisas (submete respostas)", "HTTPS/JSON")
+Rel(researchAdmin, surveySystem, "Administra pesquisas e consulta resultados", "HTTPS/JSON")
+
+Rel(postman, surveySystem, "Executa chamadas REST para testes", "HTTPS/JSON")
+Rel(surveySystem, sqlServer, "Lê e grava dados", "EF Core (SQL)")
+
+@enduml

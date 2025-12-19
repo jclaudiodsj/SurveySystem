@@ -1,0 +1,38 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+title Survey System - C4 Container Diagram
+
+Person(publicRespondent, "Respondente (Público)", "Responde pesquisas anonimamente.")
+Person(researchAdmin, "Administrador / Analista", "Cria, publica, encerra pesquisas e consulta resultados.")
+
+System_Boundary(s1, "Survey System") {
+
+  Container(api, "SurveySystem.Api", "ASP.NET Core Web API (.NET 9)", "Expõe endpoints REST. Valida requests (DataAnnotations), aplica regras e orquestra casos de uso.")
+
+  Container(domain, "SurveySystem.Domain", ".NET Class Library", "Contém regras de negócio (agregados Survey/Submission, VOs Question/Option/Period), invariantes e contratos (interfaces).")
+
+  Container(infra, "SurveySystem.Infrastructure.Data", ".NET Class Library + EF Core", "Implementa persistência via EF Core (DbContext, mapeamentos Owned Types, Repositories).")
+
+  ContainerDb(db, "SQL Server (LocalDB)", "SQL Server", "Armazena Surveys, Questions/Options (owned), Submissions/Answers (owned).")
+
+  Container(testDomain, "SurveySystem.Domain.Tests", "xUnit + FluentAssertions", "Testes unitários do domínio (invariantes e regras).")
+  Container(testInfra, "SurveySystem.Infrastructure.Data.Tests", "xUnit + EF Core InMemory", "Testes de repositório e persistência (com provider InMemory).")
+}
+
+System_Ext(postman, "Postman / HTTP Client", "Cliente HTTP", "Simula um front-end e valida o contrato REST via collection.")
+
+Rel(publicRespondent, api, "Submete respostas (Submission)", "HTTPS/JSON")
+Rel(researchAdmin, api, "Administra Survey e consulta Result", "HTTPS/JSON")
+Rel(postman, api, "Testa endpoints", "HTTPS/JSON")
+
+Rel(api, domain, "Usa", "chamadas diretas (C#)")
+Rel(api, infra, "Usa", "DI / chamadas diretas (C#)")
+Rel(infra, domain, "Implementa contratos do domínio", "C#")
+Rel(infra, db, "Acessa dados", "EF Core (SQL)")
+
+Rel(testDomain, domain, "Testa regras do domínio", "xUnit")
+Rel(testInfra, infra, "Testa repositórios", "xUnit")
+Rel(testInfra, domain, "Usa modelos do domínio", "C#")
+
+@enduml

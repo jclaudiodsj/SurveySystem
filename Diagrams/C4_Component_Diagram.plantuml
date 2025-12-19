@@ -1,0 +1,38 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+title Survey System - C4 Component Diagram (SurveySystem.Api)
+
+Container_Boundary(api, "SurveySystem.Api (ASP.NET Core Web API)") {
+
+  Component(surveyController, "SurveyController", "ASP.NET Core Controller", "Endpoints REST para criar/atualizar/publicar/encerrar Survey, gerenciar Questions e consultar Result.")
+  Component(submissionController, "SubmissionController", "ASP.NET Core Controller", "Endpoint REST para submissão anônima de respostas (Submissions).")
+
+  Component(dtoRequests, "DTOs de Request", "C# classes + DataAnnotations", "Model binding e validação de entrada (CreateSurveyRequest, UpdateSurveyRequest, AddQuestionRequest, CreateSubmissionRequest, AnswerRequest).")
+  Component(dtoResponses, "DTOs de Response", "C# classes", "Contratos de saída para Survey, Result e Submission (quando aplicável).")
+
+  Component(exceptionHandling, "Tratamento de Erros", "ASP.NET Core + try/catch", "Converte exceções do domínio/infra em respostas HTTP adequadas (400/404/409/500).")
+}
+
+Container(domain, "SurveySystem.Domain", "Class Library", "Regras de negócio: agregados Survey/Submission, VOs Question/Option/Period, validações e exceções.")
+Container(infra, "SurveySystem.Infrastructure.Data", "EF Core + Repositories", "DbContext e repositórios SQL Server para persistência.")
+ContainerDb(db, "SQL Server (LocalDB)", "SQL Server", "Persistência relacional (Surveys, Submissions, owned types).")
+
+Rel(surveyController, dtoRequests, "Recebe e valida", "Model Binding")
+Rel(submissionController, dtoRequests, "Recebe e valida", "Model Binding")
+
+Rel(surveyController, domain, "Invoca regras de negócio", "C#")
+Rel(submissionController, domain, "Cria Submission e valida invariantes", "C#")
+
+Rel(surveyController, infra, "Usa repositórios (Survey)", "DI / C#")
+Rel(submissionController, infra, "Usa repositórios (Submission)", "DI / C#")
+
+Rel(infra, db, "Lê/Grava", "EF Core (SQL)")
+
+Rel(surveyController, exceptionHandling, "Gera respostas de erro", "HTTP status")
+Rel(submissionController, exceptionHandling, "Gera respostas de erro", "HTTP status")
+
+Rel(surveyController, dtoResponses, "Retorna", "JSON")
+Rel(submissionController, dtoResponses, "Retorna", "JSON")
+
+@enduml
