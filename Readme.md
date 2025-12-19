@@ -239,3 +239,34 @@ A seguir estão as respostas objetivas para cada rubrica exigida.
 
 ## 7. Modelo de Domínio
 ![Model Domain](./Diagrams/Domain_Model.png)
+
+## 7. Procedimento de Teste (Postman)
+
+1. Abrir solution com Visual Studio
+2. Compilar a solução
+3. Ajustar a `ConnectionStrings` no arquivo `appsettings.json`
+4. Rodar migration
+  1. Abrir o `Package Manager Console`
+  2. Add-Migration Initial -Project SurveySystem.Infrastructure.Data -StartupProject SurveySystem.Api
+    - O resultado deve ser `Build succeeded.`
+  3. Update-Database -Project SurveySystem.Infrastructure.Data -StartupProject SurveySystem.Api
+    - O resultado deve ser `Done.`
+5. Iniciar o debug (tem que estar com `SurveySystem.Api` como `Startup Item`)
+6. Abrir o Postman
+7. Importar o projeto `Survey System - Arq. .Net - José Cláudio de Souza Jr.postman_collection.json` (disponível na raiz do repositório).
+8. Executar o request `Survey - Create - Eleições Estaduais`, o response esperado é `201 - Created` com retorno da enquete criada.
+9. Executar o request `Survey - Create - Eleições Presidenciais`, o response esperado é `201 - Created` com retorno da enquete criada.
+10. Executar o request `Survey - Get All`, o response esperado é `200 - OK` com todas as enquetes criadas.
+11. Substitui `{SurveyId}` pelo Guid da enquete `Survey - Create - Eleições Presidenciais` e executar o request `Survey - Get By Id`, o response esperado é `200 - OK` com a enquete correspondente.
+12. Substitui `{SurveyId}` pelo Guid da enquete `Survey - Create - Eleições Presidenciais` e executar o request `Survey - Update`, o response esperado é `200 - OK` com a enquete corresponente atualizada.
+13. Substitui `{SurveyId}` pelo Guid da enquete `Survey - Create - Eleições Presidenciais` e executar o request `Survey - Add Question`, o response esperado é `200 - OK` com a enquete corresponente atualizada com a nova questão.
+14. Substitui `{SurveyId}` pelo Guid da enquete `Survey - Create - Eleições Presidenciais` e executar o request `Survey - Delete Question`, o response esperado é `200 - OK` com a enquete corresponente atualizada sem a questão removida.
+15. Substitui `{SurveyId}` pelo Guid da enquete `Survey - Create - Eleições Estaduais` e executar o request `Survey - Publish`, o response esperado é `200 - OK` com a enquete corresponente atualizada com status 1 (Publicado).
+15. Substitui `{SurveyId}` pelo Guid da enquete `Survey - Create - Eleições Estaduais` e executar o request `Submission - Create`, o response esperado é `201 - Created` com a submissão corresponente.
+16. Executar o request `Submission - Get All`, o response esperado é `200 - OK` com todas as submissões criadas.
+17. Substitui `{SubmissionId}` pelo Guid da submissão criada no passo anterior e executar o request `Submission - Get By Id`, o response esperado é `200 - OK` com a submissão correspondente.
+18. Substitui `{SurveyId}` pelo Guid da enquete `Survey - Create - Eleições Estaduais` e executar o request `Survey - Get Result`, o response esperado é `200 - OK` com a enquete, suas perguntas e, dentro de cada pergunta, o total de votos e também. Dentro de cada opção votada tem a quantidade de votos corresponentes e o percentual de votos perante todos os votos da questão corresponente.
+19. Substitui `{SurveyId}` pelo Guid da enquete `Survey - Create - Eleições Estaduais` e executar o request `Survey - Close`, o response esperado é `200 - OK` com a enquete corresponente atualizada com status 2 (Encerrado).
+20. [OPCIONAL] Substitui `{SurveyId}` pelo Guid da enquete `Survey - Create - Eleições Estaduais` e executar o request `Survey - Delete`, o response esperado é `204 - No Content`.
+21. [OPCIONAL] Executar o request `Survey - Delete All`, o response esperado é `204 - No Content`.
+22. [OPCIONAL] Executar o request `Submission - Delete All`, o response esperado é `204 - No Content`.
