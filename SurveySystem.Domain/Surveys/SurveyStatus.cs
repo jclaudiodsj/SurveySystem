@@ -1,4 +1,4 @@
-﻿namespace SurveySystem.Domain
+﻿namespace SurveySystem.Domain.Surveys
 {
     public enum SurveyStatus
     {

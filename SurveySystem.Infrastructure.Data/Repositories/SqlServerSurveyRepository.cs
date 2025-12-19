@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SurveySystem.Domain;
 using SurveySystem.Domain.Repositories;
 using SurveySystem.Domain.Surveys;
 
@@ -56,29 +55,6 @@ namespace SurveySystem.Infrastructure.Data.Repositories
         public async Task<bool> Exists(Guid surveyId)
         {
             return await _context.Surveys.AnyAsync(c => c.Id == surveyId);
-        }
-
-        public async Task Submit(Submission submission)
-        {
-            await _context.Submissions.AddAsync(submission);
-            await _context.SaveChangesAsync();
-        }
-
-        public async Task<Submission> GetSubmissionById(Guid submissionId)
-        {
-            return await _context.Submissions
-                .Include(s => s.Answers)
-                .AsNoTracking()
-                .FirstOrDefaultAsync(s => s.Id == submissionId);
-        }
-
-        public async Task<List<Submission>> GetSubmissionsBySurveyId(Guid surveyId)
-        {
-            return await _context.Submissions
-                .Where(s => s.SurveyId == surveyId)
-                .Include(s => s.Answers)
-                .AsNoTracking()
-                .ToListAsync();
         }
     }
 }

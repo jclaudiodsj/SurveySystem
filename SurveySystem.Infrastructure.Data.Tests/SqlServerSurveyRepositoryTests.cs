@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SurveySystem.Domain;
+using SurveySystem.Domain.Submissions;
 using SurveySystem.Domain.Surveys;
 using SurveySystem.Infrastructure.Data.Repositories;
 
@@ -11,7 +11,8 @@ namespace SurveySystem.Infrastructure.Data.Tests
     public class SqlServerSurveyRepositoryTests : IClassFixture<SurveySystemRepositoryTestFixture>
     {
         private readonly SurveySystemRepositoryTestFixture _fixture;
-        private readonly SqlServerSurveyRepository _repository;
+        private readonly SqlServerSurveyRepository _repositorySurvey;
+        private readonly SqlServerSubmissionRepository _repositorySubmission;
         private readonly SurveyDbContext _context;
 
         public SqlServerSurveyRepositoryTests(SurveySystemRepositoryTestFixture fixture)
@@ -23,7 +24,8 @@ namespace SurveySystem.Infrastructure.Data.Tests
             _fixture.InitializeAsync().Wait();
 
             _context = _fixture.DbContext;
-            _repository = new SqlServerSurveyRepository(_context);
+            _repositorySurvey = new SqlServerSurveyRepository(_context);
+            _repositorySubmission = new SqlServerSubmissionRepository(_context);
         }
 
         // Helper para criar uma enquete de teste com dados padrão.
@@ -47,7 +49,7 @@ namespace SurveySystem.Infrastructure.Data.Tests
         {
             var survey = CreateTestSurvey("Customer Satisfaction", "Survey about customer satisfaction", "How satisfied are you with our service?");
             // Act
-            await _repository.Add(survey);
+            await _repositorySurvey.Add(survey);
             await _context.SaveChangesAsync();
 
             // Assert
@@ -70,11 +72,11 @@ namespace SurveySystem.Infrastructure.Data.Tests
         {
             // Arrange
             var survey = CreateTestSurvey("Employee Engagement", "Survey about employee engagement", "How engaged do you feel at work?");
-            await _repository.Add(survey);
+            await _repositorySurvey.Add(survey);
             await _context.SaveChangesAsync();
             // Act
             survey.UpdateDetails("Updated Title", "Updated Description", DateTimeOffset.Now, DateTimeOffset.Now.AddDays(15));
-            await _repository.Update(survey);
+            await _repositorySurvey.Update(survey);
             await _context.SaveChangesAsync();
             // Assert
             var updatedSurvey = await _context.Surveys.FindAsync(survey.Id);
@@ -88,10 +90,10 @@ namespace SurveySystem.Infrastructure.Data.Tests
         {
             // Arrange
             var survey = CreateTestSurvey("Product Feedback", "Survey about product feedback", "What do you think about our product?");
-            await _repository.Add(survey);
+            await _repositorySurvey.Add(survey);
             await _context.SaveChangesAsync();
             // Act
-            await _repository.Delete(survey.Id);
+            await _repositorySurvey.Delete(survey.Id);
             await _context.SaveChangesAsync();
             // Assert
             var deletedSurvey = await _context.Surveys.FindAsync(survey.Id);
@@ -104,11 +106,11 @@ namespace SurveySystem.Infrastructure.Data.Tests
             // Arrange
             var survey1 = CreateTestSurvey("Survey 1", "Description 1", "Question 1?");
             var survey2 = CreateTestSurvey("Survey 2", "Description 2", "Question 2?");
-            await _repository.Add(survey1);
-            await _repository.Add(survey2);
+            await _repositorySurvey.Add(survey1);
+            await _repositorySurvey.Add(survey2);
             await _context.SaveChangesAsync();
             // Act
-            var surveys = await _repository.GetAll();
+            var surveys = await _repositorySurvey.GetAll();
             // Assert
             Assert.NotNull(surveys);
             Assert.True(surveys.Count >= 2);
@@ -121,10 +123,10 @@ namespace SurveySystem.Infrastructure.Data.Tests
         {
             // Arrange
             var survey = CreateTestSurvey("Market Research", "Survey about market research", "What are your buying habits?");
-            await _repository.Add(survey);
+            await _repositorySurvey.Add(survey);
             await _context.SaveChangesAsync();
             // Act
-            var retrievedSurvey = await _repository.GetById(survey.Id);
+            var retrievedSurvey = await _repositorySurvey.GetById(survey.Id);
             // Assert
             Assert.NotNull(retrievedSurvey);
             Assert.Equal(survey.Title, retrievedSurvey.Title);
@@ -137,7 +139,7 @@ namespace SurveySystem.Infrastructure.Data.Tests
             // Arrange
             var survey = CreateTestSurvey("Brand Awareness", "Survey about brand awareness", "How familiar are you with our brand?");
             // Act
-            await _repository.Add(survey);
+            await _repositorySurvey.Add(survey);
             await _context.SaveChangesAsync();
             var exists = await _context.Surveys.AnyAsync(s => s.Id == survey.Id);
             // Assert
@@ -162,7 +164,7 @@ namespace SurveySystem.Infrastructure.Data.Tests
             var submission = Submission.Create(survey.Id, DateTimeOffset.UtcNow, answers);
 
             // Act
-            await _repository.Submit(submission);
+            await _repositorySubmission.Add(submission);
             await _context.SaveChangesAsync();
 
             // Assert
@@ -192,10 +194,10 @@ namespace SurveySystem.Infrastructure.Data.Tests
                 Answer.Create(questionText, "Option 2")
             };
             var submission = Submission.Create(survey.Id, DateTimeOffset.UtcNow, answers);
-            await _repository.Submit(submission);
+            await _repositorySubmission.Add(submission);
             await _context.SaveChangesAsync();
             // Act
-            var retrieved = await _repository.GetSubmissionById(submission.Id);
+            var retrieved = await _repositorySubmission.GetById(submission.Id);
             // Assert
             Assert.NotNull(retrieved);
             Assert.Equal(submission.SurveyId, retrieved.SurveyId);
@@ -221,11 +223,11 @@ namespace SurveySystem.Infrastructure.Data.Tests
             {
                 Answer.Create(questionText, "Option 2")
             });
-            await _repository.Submit(submission1);
-            await _repository.Submit(submission2);
+            await _repositorySubmission.Add(submission1);
+            await _repositorySubmission.Add(submission2);
             await _context.SaveChangesAsync();
             // Act
-            var submissions = await _repository.GetSubmissionsBySurveyId(survey.Id);
+            var submissions = await _repositorySubmission.GetBySurveyId(survey.Id);
             // Assert
             Assert.NotNull(submissions);
             Assert.True(submissions.Count >= 2);

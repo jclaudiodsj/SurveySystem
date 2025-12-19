@@ -1,6 +1,6 @@
-﻿using SurveySystem.Domain.Surveys;
+﻿using SurveySystem.Domain.Submissions;
 
-namespace SurveySystem.Domain.Tests
+namespace SurveySystem.Domain.Tests.Submissions
 {
     public class SubmissionTests
     {
@@ -15,7 +15,7 @@ namespace SurveySystem.Domain.Tests
                 Answer.Create("Question 1", "Option 1"),
                 Answer.Create("Question 2", "Option 1")
             };
-            // Act
+            // Act 
             var submission = Submission.Create(surveyId, submittedAt, answers);
             // Assert
             Assert.Equal(surveyId, submission.SurveyId);

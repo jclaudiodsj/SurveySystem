@@ -1,8 +1,8 @@
 ﻿using SurveySystem.Domain.Shared;
 
-namespace SurveySystem.Domain.Surveys
+namespace SurveySystem.Domain.Submissions
 {
-    public sealed class Submission : Entity
+    public class Submission : Entity
     {
         public Guid SurveyId { get; private set; }
         public DateTimeOffset SubmittedAt { get; private set; }

@@ -9,9 +9,6 @@ namespace SurveySystem.Domain.Repositories
         Task Delete(Guid surveyId);
         Task<Survey> GetById(Guid surveyId);
         Task<List<Survey>> GetAll();
-        Task<bool> Exists(Guid surveyId);
-        Task Submit(Submission submission);
-        Task<Submission> GetSubmissionById(Guid submissionId);
-        Task<List<Submission>> GetSubmissionsBySurveyId(Guid surveyId);
+        Task<bool> Exists(Guid surveyId);        
     }
 }

@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SurveySystem.Domain;
+using SurveySystem.Domain.Submissions;
 using SurveySystem.Domain.Surveys;
 
 namespace SurveySystem.Infrastructure.Data

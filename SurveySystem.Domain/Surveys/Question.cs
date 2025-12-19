@@ -1,6 +1,6 @@
 ﻿using SurveySystem.Domain.Shared;
 
-namespace SurveySystem.Domain
+namespace SurveySystem.Domain.Surveys
 {
     public class Question : ValueObject
     {
@@ -13,9 +13,9 @@ namespace SurveySystem.Domain
 
         private Question()
         {
-            this.Text = string.Empty;
-            this.Order = 0;
-            this._options = new List<Option>();
+            Text = string.Empty;
+            Order = 0;
+            _options = new List<Option>();
         }
 
         public static Question Create(string Text, int Order, List<string> Options)

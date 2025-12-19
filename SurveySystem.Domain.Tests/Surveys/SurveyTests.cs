@@ -1,7 +1,8 @@
 ﻿using FluentAssertions;
 using SurveySystem.Domain.Shared;
+using SurveySystem.Domain.Surveys;
 
-namespace SurveySystem.Domain.Tests
+namespace SurveySystem.Domain.Tests.Surveys
 {
     public class SurveyTests
     {

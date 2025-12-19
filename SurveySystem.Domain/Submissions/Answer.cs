@@ -1,6 +1,6 @@
 ﻿using SurveySystem.Domain.Shared;
 
-namespace SurveySystem.Domain
+namespace SurveySystem.Domain.Submissions
 {
     public class Answer : ValueObject
     {

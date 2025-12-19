@@ -19,4 +19,8 @@
     <ProjectReference Include="..\SurveySystem.Domain\SurveySystem.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Configurations\" />
+  </ItemGroup>
+
 </Project>

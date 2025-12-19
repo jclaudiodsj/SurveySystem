@@ -1,6 +1,6 @@
 ﻿using SurveySystem.Domain.Shared;
 
-namespace SurveySystem.Domain
+namespace SurveySystem.Domain.Surveys
 {
     public class Survey : Entity
     {
@@ -27,13 +27,13 @@ namespace SurveySystem.Domain
         {
             this.Title = Title;
             this.Description = string.IsNullOrWhiteSpace(Description) ? null : Description.Trim();
-            this.Status = SurveyStatus.Draft;
+            Status = SurveyStatus.Draft;
             //this.Period = SurveyPeriod.Create(StartDate, EndDate);
-            this.CreatedAt = DateTimeOffset.UtcNow;
-            this.UpdatedAt = DateTimeOffset.UtcNow;
-            this.PublishedAt = null;
-            this.ClosedAt = null;
-            this._questions = new List<Question>();
+            CreatedAt = DateTimeOffset.UtcNow;
+            UpdatedAt = DateTimeOffset.UtcNow;
+            PublishedAt = null;
+            ClosedAt = null;
+            _questions = new List<Question>();
         }
 
         public static Survey Create(string Title, string Description, DateTimeOffset StartDate, DateTimeOffset EndDate)
@@ -62,8 +62,8 @@ namespace SurveySystem.Domain
 
             this.Title = Title;
             this.Description = Description;
-            this.Period = SurveyPeriod.Create(StartDate, EndDate);
-            this.UpdatedAt = DateTimeOffset.UtcNow;
+            Period = SurveyPeriod.Create(StartDate, EndDate);
+            UpdatedAt = DateTimeOffset.UtcNow;
         }
 
         public void AddQuestion(string Text, List<string> Options)
@@ -74,8 +74,8 @@ namespace SurveySystem.Domain
             if (_questions.Any(q => q.Text.Equals(Text, StringComparison.OrdinalIgnoreCase)))
                 throw new DomainException("A question with the same text already exists in the survey.");
 
-            this.UpdatedAt = DateTimeOffset.UtcNow;
-            this._questions.Add(Question.Create(Text, _questions.Count, Options));
+            UpdatedAt = DateTimeOffset.UtcNow;
+            _questions.Add(Question.Create(Text, _questions.Count, Options));
         }
 
         public void RemoveQuestion(int questionIndex)
@@ -86,7 +86,7 @@ namespace SurveySystem.Domain
             if (questionIndex < 0 || questionIndex >= _questions.Count)
                 throw new DomainException("Invalid question index.");
 
-            this.UpdatedAt = DateTimeOffset.UtcNow;
+            UpdatedAt = DateTimeOffset.UtcNow;
             _questions.RemoveAt(questionIndex);
             
             ReorderQuestions();
