@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using SurveySystem.Api.Dtos.Shared;
 using SurveySystem.Api.Dtos.Submissions.Requests;
 using SurveySystem.Api.Dtos.Submissions.Responses;
 using SurveySystem.Domain.Repositories;
@@ -46,7 +47,7 @@ namespace SurveySystem.Api.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> CreateSubmission([FromBody] CreateSubmissionRequest request)
+        public async Task<IActionResult> CreateSubmission([NotEmptyGuid(ErrorMessage = "SurveyId must not be empty.")] Guid surveyId, [FromBody] CreateSubmissionRequest request)
         {
             if (!ModelState.IsValid)
             {
@@ -59,10 +60,10 @@ namespace SurveySystem.Api.Controllers
                     Answer.Create(a.QuestionText, a.OptionText)
                 ).ToList();
 
-                var survey = await _surveyRepository.GetById(request.SurveyId);
+                var survey = await _surveyRepository.GetById(surveyId);
 
                 if (survey is null)
-                    return BadRequest(new { message = $"Survey with ID {request.SurveyId} not found." });
+                    return BadRequest(new { message = $"Survey with ID {surveyId} not found." });
                 
                 if (survey.Status == Domain.Surveys.SurveyStatus.Draft)
                     return BadRequest(new { message = "It is not possible to submit responses to a survey that has not yet been published." });
@@ -82,7 +83,7 @@ namespace SurveySystem.Api.Controllers
                 foreach (var answer in answers)
                 {
                     if (survey.Questions.FirstOrDefault(q => q.Text == answer.QuestionText) is null)
-                        return BadRequest(new { message = $"({answer.QuestionText}) was not found in the search ({request.SurveyId})." });
+                        return BadRequest(new { message = $"({answer.QuestionText}) was not found in the search ({surveyId})." });
 
                     if (survey.Questions.First(q => q.Text == answer.QuestionText).Options.FirstOrDefault(o => o.Text == answer.OptionText) is null)
                         return BadRequest(new { message = $"({answer.OptionText}) is not a valid option for the question ({answer.QuestionText})." });
@@ -92,7 +93,7 @@ namespace SurveySystem.Api.Controllers
                 }                
 
                 // Map DTO to Domain Value Objects
-                var submission = Submission.Create(request.SurveyId, DateTime.UtcNow, answers);
+                var submission = Submission.Create(surveyId, DateTime.UtcNow, answers);
 
                 await _submissionRepository.Add(submission);
 
@@ -120,7 +121,7 @@ namespace SurveySystem.Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetSubmissionById(Guid id)
+        public async Task<IActionResult> GetSubmissionById([NotEmptyGuid(ErrorMessage = "SurveyId must not be empty.")] Guid id)
         {
             try
             {

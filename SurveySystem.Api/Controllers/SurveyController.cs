@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
+using SurveySystem.Api.Dtos.Shared;
 using SurveySystem.Api.Dtos.Surveys.Requests;
 using SurveySystem.Api.Dtos.Surveys.Responses;
 using SurveySystem.Domain.Repositories;
 using SurveySystem.Domain.Shared;
 using SurveySystem.Domain.Surveys;
+using System.ComponentModel.DataAnnotations;
 
 namespace SurveySystem.Api.Controllers
 {
@@ -107,7 +109,7 @@ namespace SurveySystem.Api.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> UpdateSurvey(Guid id, [FromBody] UpdateSurveyRequest request)
+        public async Task<IActionResult> UpdateSurvey([NotEmptyGuid(ErrorMessage = "Id must not be empty.")] Guid id, [FromBody] UpdateSurveyRequest request)
         {
             if (!ModelState.IsValid)
             {
@@ -149,7 +151,7 @@ namespace SurveySystem.Api.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> DeleteSurvey(Guid id)
+        public async Task<IActionResult> DeleteSurvey([NotEmptyGuid(ErrorMessage = "Id must not be empty.")] Guid id)
         {
             try
             {
@@ -180,7 +182,7 @@ namespace SurveySystem.Api.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> AddQuestion(Guid id, [FromBody] AddQuestionRequest request)
+        public async Task<IActionResult> AddQuestion([NotEmptyGuid(ErrorMessage = "Id must not be empty.")] Guid id, [FromBody] AddQuestionRequest request)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -222,7 +224,9 @@ namespace SurveySystem.Api.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> RemoveQuestion(Guid id, int questionIndex)
+        public async Task<IActionResult> RemoveQuestion([NotEmptyGuid(ErrorMessage = "Id must not be empty.")] Guid id, 
+                                                        [Required]
+                                                        [Range(0, int.MaxValue)] int questionIndex)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -263,7 +267,7 @@ namespace SurveySystem.Api.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> Publish(Guid id)
+        public async Task<IActionResult> Publish([NotEmptyGuid(ErrorMessage = "Id must not be empty.")] Guid id)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -305,7 +309,7 @@ namespace SurveySystem.Api.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> Close(Guid id)
+        public async Task<IActionResult> Close([NotEmptyGuid(ErrorMessage = "Id must not be empty.")] Guid id)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -347,7 +351,7 @@ namespace SurveySystem.Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetSurveyById(Guid id)
+        public async Task<IActionResult> GetSurveyById([NotEmptyGuid(ErrorMessage = "Id must not be empty.")] Guid id)
         {
             try
             {
@@ -399,7 +403,7 @@ namespace SurveySystem.Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> Result(Guid id)
+        public async Task<IActionResult> Result([NotEmptyGuid(ErrorMessage = "Id must not be empty.")] Guid id)
         {
             try
             {
