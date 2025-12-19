@@ -106,6 +106,9 @@ namespace SurveySystem.Domain.Surveys
             if (_questions.Count == 0)
                 throw new DomainException("Cannot publish a survey with no questions.");
 
+            if (DateTimeOffset.UtcNow < Period.StartDate)
+                throw new DomainException("Cannot publish a survey before its start date.");
+
             PublishedAt = DateTimeOffset.UtcNow;
             Status = SurveyStatus.Published;
         }

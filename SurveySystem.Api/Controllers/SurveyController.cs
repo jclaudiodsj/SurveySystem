@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using SurveySystem.Api.Dtos.Surveys;
 using SurveySystem.Api.Dtos.Surveys.Requests;
 using SurveySystem.Api.Dtos.Surveys.Responses;
 using SurveySystem.Domain.Repositories;
@@ -13,11 +12,13 @@ namespace SurveySystem.Api.Controllers
     public class SurveyController : ControllerBase
     {
         private readonly ISurveyRepository _surveyRepository;
+        private readonly ISubmissionRepository _submissionRepository;
         private readonly ILogger<SurveyController> _logger;
 
-        public SurveyController(ISurveyRepository surveyRepository, ILogger<SurveyController> logger)
+        public SurveyController(ISurveyRepository surveyRepository, ISubmissionRepository submissionRepository, ILogger<SurveyController> logger)
         {
             _surveyRepository = surveyRepository;
+            _submissionRepository = submissionRepository;
             _logger = logger;
         }
 
@@ -385,6 +386,73 @@ namespace SurveySystem.Api.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Erro interno ao listar pesquisas.");
+                return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Ocorreu um erro interno ao processar sua requisição." });
+            }
+        }
+
+        /// <summary>
+        /// Obtém o resultado sumarizado de um pesquisa a partir de seu ID.
+        /// </summary>
+        /// <param name="id">ID da pesquisa.</param>
+        /// <returns>O resultado sumarizado da pesquisa.</returns>
+        [HttpGet("{id:guid}/Result")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> Result(Guid id)
+        {
+            try
+            {
+                var survey = await _surveyRepository.GetById(id);
+
+                if (survey is null)
+                    return NotFound(new { message = $"Pesquisa com ID {id} não encontrada." });
+
+                var submissions = await _submissionRepository.GetBySurveyId(id);
+
+                var response = new SurveyResultResponse
+                {
+                    Id = survey.Id,
+                    Title = survey.Title,
+                    Description = (survey.Description == null ? string.Empty : survey.Description),
+                    Status = survey.Status,
+                    Period = new SurveyPeriodResponse
+                    {
+                        StartDate = survey.Period.StartDate,
+                        EndDate = survey.Period.EndDate
+                    },
+                    CreatedAt = survey.CreatedAt,
+                    UpdatedAt = survey.UpdatedAt,
+                    PublishedAt = survey.PublishedAt,
+                    ClosedAt = survey.ClosedAt,
+                    Question = survey.Questions.Select(q => new QuestionResultResponse
+                    {
+                        Text = q.Text,
+                        TotalVotes = submissions.Sum(s => s.Answers.Count(a => a.QuestionText == q.Text)),
+                        Options = q.Options.Select(o => new OptionResultResponse
+                        {
+                            Text = o.Text,
+                            TotalVotes = submissions.Sum(s => s.Answers.Count(a => a.QuestionText == q.Text && a.OptionText == o.Text)),
+                            PercentualVotes = 0 // Será calculado depois
+                        }).ToList()
+                    }).ToList()
+                };
+
+                // Calcular percentual de votos para cada opção 
+                foreach (var question in response.Question)
+                {
+                    if(question.TotalVotes == 0)
+                        continue;
+
+                    foreach (var option in question.Options)
+                        option.PercentualVotes = (double)option.TotalVotes / question.TotalVotes * 100;
+                }
+
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Erro interno ao buscar resultado da pesquisa com ID {SurveyId}.", id);
                 return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Ocorreu um erro interno ao processar sua requisição." });
             }
         }
