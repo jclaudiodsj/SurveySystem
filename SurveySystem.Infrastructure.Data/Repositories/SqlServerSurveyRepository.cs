@@ -6,9 +6,9 @@ namespace SurveySystem.Infrastructure.Data.Repositories
 {
     public class SqlServerSurveyRepository : ISurveyRepository
     {
-        private readonly SurveyDbContext _context;
+        private readonly SurveySystemDbContext _context;
 
-        public SqlServerSurveyRepository(SurveyDbContext context)
+        public SqlServerSurveyRepository(SurveySystemDbContext context)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }

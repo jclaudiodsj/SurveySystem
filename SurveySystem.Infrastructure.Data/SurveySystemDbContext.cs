@@ -4,9 +4,9 @@ using SurveySystem.Domain.Surveys;
 
 namespace SurveySystem.Infrastructure.Data
 {
-    public class SurveyDbContext : DbContext
+    public class SurveySystemDbContext : DbContext
     {
-        public SurveyDbContext(DbContextOptions<SurveyDbContext> options) : base(options) { }
+        public SurveySystemDbContext(DbContextOptions<SurveySystemDbContext> options) : base(options) { }
 
         public DbSet<Survey> Surveys => Set<Survey>();
         public DbSet<Submission> Submissions => Set<Submission>();

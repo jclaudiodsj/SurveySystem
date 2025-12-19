@@ -22,7 +22,7 @@ if (app.Environment.IsDevelopment())
     // Aplica as migrações do banco de dados automaticamente ao iniciar a aplicação em desenvolvimento.
     //using (var scope = app.Services.CreateScope())
     //{
-    //    var dbContext = scope.ServiceProvider.GetRequiredService<SurveyDbContext>();
+    //    var dbContext = scope.ServiceProvider.GetRequiredService<SurveySystemDbContext>();
     //    dbContext.Database.Migrate();
     //}
 }

@@ -11,7 +11,7 @@ namespace SurveySystem.Infrastructure.Data.Tests
     {
         private readonly SurveySystemRepositoryTestFixture _fixture;
         private readonly SqlServerSurveyRepository _repositorySurvey;        
-        private readonly SurveyDbContext _context;
+        private readonly SurveySystemDbContext _context;
 
         public SqlServerSurveyRepositoryTests(SurveySystemRepositoryTestFixture fixture)
         {

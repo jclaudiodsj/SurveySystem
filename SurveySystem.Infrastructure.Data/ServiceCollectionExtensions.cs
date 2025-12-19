@@ -22,7 +22,7 @@ namespace SurveySystem.Infrastructure
         {
             // Configura o DbContext para usar SQL Server com LocalDB.
             // A string de conexão é lida do arquivo de configuração (appsettings.json).
-            services.AddDbContext<SurveyDbContext>(options =>
+            services.AddDbContext<SurveySystemDbContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("Default")));
 
             // Registra o repositório de pesquisas para injeção de dependência.

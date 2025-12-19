@@ -12,7 +12,7 @@ namespace SurveySystem.Infrastructure.Data.Tests
         /// <summary>
         /// Contexto do banco de dados para os testes.
         /// </summary>
-        public SurveyDbContext DbContext { get; private set; }
+        public SurveySystemDbContext DbContext { get; private set; }
 
         /// <summary>
         /// Repositórios a serem testados.
@@ -28,12 +28,12 @@ namespace SurveySystem.Infrastructure.Data.Tests
         {
             // Configura as opções do DbContext para usar um banco de dados em memória.
             // Usa um nome de banco de dados único para cada execução de fixture para evitar conflitos.
-            var options = new DbContextOptionsBuilder<SurveyDbContext>()
+            var options = new DbContextOptionsBuilder<SurveySystemDbContext>()
                 .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
                 .Options;
 
             // Instancia o DbContext com as opções configuradas.
-            DbContext = new SurveyDbContext(options);
+            DbContext = new SurveySystemDbContext(options);
 
             // Garante que o banco de dados em memória seja criado.
             // Para bancos de dados reais, isso seria 'MigrateAsync()'.
