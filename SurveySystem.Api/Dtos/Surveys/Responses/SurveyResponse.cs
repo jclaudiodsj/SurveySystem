@@ -1,13 +1,13 @@
 ﻿using SurveySystem.Domain.Surveys;
 
-namespace SurveySystem.Api.Dtos.Surveys
+namespace SurveySystem.Api.Dtos.Surveys.Responses
 {
     public class SurveyResponse
     {
         public Guid Id { get; set; }
-        public string Title { get; set; } = String.Empty;   
+        public string Title { get; set; } = string.Empty;   
 
-        public string Description { get; set; } = String.Empty;
+        public string Description { get; set; } = string.Empty;
 
         public SurveyStatus Status { get; set; } = SurveyStatus.Draft;
 

@@ -1,6 +1,6 @@
-﻿namespace SurveySystem.Api.Dtos.Surveys
+﻿namespace SurveySystem.Api.Dtos.Surveys.Responses
 {
-    public class SurveyPeriodRequest
+    public class SurveyPeriodResponse
     {
         public DateTimeOffset StartDate { get; set; } = new DateTime();
         public DateTimeOffset EndDate { get; set; } = new DateTime(); 

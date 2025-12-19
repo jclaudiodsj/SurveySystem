@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using SurveySystem.Api.Dtos.Surveys;
+using SurveySystem.Api.Dtos.Surveys.Requests;
+using SurveySystem.Api.Dtos.Surveys.Responses;
 using SurveySystem.Domain.Repositories;
 using SurveySystem.Domain.Shared;
 using SurveySystem.Domain.Surveys;

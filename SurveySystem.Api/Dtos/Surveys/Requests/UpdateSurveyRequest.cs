@@ -1,4 +1,4 @@
-﻿namespace SurveySystem.Api.Dtos.Surveys
+﻿namespace SurveySystem.Api.Dtos.Surveys.Requests
 {
     public class UpdateSurveyRequest
     {
