@@ -1,5 +1,4 @@
 ﻿using SurveySystem.Domain.Shared;
-using System.Windows.Markup;
 
 namespace SurveySystem.Domain
 {

@@ -43,8 +43,7 @@ namespace SurveySystem.Infrastructure.Data
 
                     qb.OwnsMany(typeof(Option), "_options", ob =>
                     {
-                        ob.WithOwner().HasForeignKey("QuestionText");
-
+                        ob.WithOwner().HasForeignKey("QuestionId");
                         ob.Property<int>("Id");
                         ob.HasKey("Id");
 

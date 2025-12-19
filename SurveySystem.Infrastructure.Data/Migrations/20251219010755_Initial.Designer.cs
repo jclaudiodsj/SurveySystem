@@ -12,7 +12,7 @@ using SurveySystem.Infrastructure.Data;
 namespace SurveySystem.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(SurveyDbContext))]
-    [Migration("20251219003031_Initial")]
+    [Migration("20251219010755_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -115,7 +115,7 @@ namespace SurveySystem.Infrastructure.Data.Migrations
                                     b2.Property<int>("Order")
                                         .HasColumnType("int");
 
-                                    b2.Property<int>("QuestionText")
+                                    b2.Property<int>("QuestionId")
                                         .HasColumnType("int");
 
                                     b2.Property<string>("Text")
@@ -124,12 +124,12 @@ namespace SurveySystem.Infrastructure.Data.Migrations
 
                                     b2.HasKey("Id");
 
-                                    b2.HasIndex("QuestionText");
+                                    b2.HasIndex("QuestionId");
 
                                     b2.ToTable("Option");
 
                                     b2.WithOwner()
-                                        .HasForeignKey("QuestionText");
+                                        .HasForeignKey("QuestionId");
                                 });
 
                             b1.Navigation("_options");

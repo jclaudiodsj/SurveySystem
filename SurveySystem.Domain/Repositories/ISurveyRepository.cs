@@ -4,7 +4,6 @@ namespace SurveySystem.Domain.Repositories
 {
     public interface ISurveyRepository
     {
-        Task<int> SaveChangesAsync();
         Task Add(Survey survey);
         Task Update(Survey survey);
         Task Delete(Guid surveyId);

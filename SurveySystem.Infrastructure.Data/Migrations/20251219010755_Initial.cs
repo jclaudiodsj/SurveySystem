@@ -94,14 +94,14 @@ namespace SurveySystem.Infrastructure.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Text = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Order = table.Column<int>(type: "int", nullable: false),
-                    QuestionText = table.Column<int>(type: "int", nullable: false)
+                    QuestionId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Option", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Option_Question_QuestionText",
-                        column: x => x.QuestionText,
+                        name: "FK_Option_Question_QuestionId",
+                        column: x => x.QuestionId,
                         principalTable: "Question",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -113,9 +113,9 @@ namespace SurveySystem.Infrastructure.Data.Migrations
                 column: "SubmissionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Option_QuestionText",
+                name: "IX_Option_QuestionId",
                 table: "Option",
-                column: "QuestionText");
+                column: "QuestionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Question_SurveyId",

@@ -14,11 +14,6 @@ namespace SurveySystem.Infrastructure.Data.Repositories
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public async Task<int> SaveChangesAsync()
-        {
-            return await _context.SaveChangesAsync();
-        }
-
         public async Task Add(Survey survey)
         {
             await _context.Surveys.AddAsync(survey);

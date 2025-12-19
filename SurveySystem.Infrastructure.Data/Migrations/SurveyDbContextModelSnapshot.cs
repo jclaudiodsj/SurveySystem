@@ -112,7 +112,7 @@ namespace SurveySystem.Infrastructure.Data.Migrations
                                     b2.Property<int>("Order")
                                         .HasColumnType("int");
 
-                                    b2.Property<int>("QuestionText")
+                                    b2.Property<int>("QuestionId")
                                         .HasColumnType("int");
 
                                     b2.Property<string>("Text")
@@ -121,12 +121,12 @@ namespace SurveySystem.Infrastructure.Data.Migrations
 
                                     b2.HasKey("Id");
 
-                                    b2.HasIndex("QuestionText");
+                                    b2.HasIndex("QuestionId");
 
                                     b2.ToTable("Option");
 
                                     b2.WithOwner()
-                                        .HasForeignKey("QuestionText");
+                                        .HasForeignKey("QuestionId");
                                 });
 
                             b1.Navigation("_options");
