@@ -86,13 +86,13 @@ namespace SurveySystem.Api.Controllers
             }
             catch (DomainException ex)
             {
-                _logger.LogWarning(ex, "Erro de domínio ao criar pesquisa: {Message}", ex.Message);
+                _logger.LogWarning(ex, "Domain error when creating survey: {Message}", ex.Message);
                 return BadRequest(new { message = ex.Message });
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Erro interno ao criar pesquisa.");
-                return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Ocorreu um erro interno ao processar sua requisição." });
+                _logger.LogError(ex, "Internal error while creating survey.");
+                return StatusCode(StatusCodes.Status500InternalServerError, new { message = "An internal error occurred while processing your request." });
             }
         }
 
@@ -119,7 +119,7 @@ namespace SurveySystem.Api.Controllers
                 var survey = await _surveyRepository.GetById(id);
 
                 if (survey is null)
-                    return NotFound(new { message = $"Pesquisa com ID {id} não encontrada." });
+                    return NotFound(new { message = $"Survey with ID {id} not found." });
 
                 survey.UpdateDetails(request.Title, request.Description, request.SurveyPeriod.StartDate, request.SurveyPeriod.EndDate);
 
@@ -130,13 +130,13 @@ namespace SurveySystem.Api.Controllers
             }
             catch (DomainException ex)
             {
-                _logger.LogWarning(ex, "Erro de domínio ao atualizar pesquisa {SurveyId}: {Message}", id, ex.Message);
+                _logger.LogWarning(ex, "Domain error while updating survey {SurveyId}: {Message}", id, ex.Message);
                 return BadRequest(new { message = ex.Message });
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Erro interno ao atualizar pesquisa {SurveyId}.", id);
-                return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Ocorreu um erro interno ao processar sua requisição." });
+                _logger.LogError(ex, "Internal error while updating survey {SurveyId}.", id);
+                return StatusCode(StatusCodes.Status500InternalServerError, new { message = "An internal error occurred while processing your request." });
             }
         }
 
@@ -156,7 +156,7 @@ namespace SurveySystem.Api.Controllers
                 var survey = await _surveyRepository.GetById(id);
 
                 if (survey is null)
-                    return NotFound(new { message = $"Pesquisa com ID {id} não encontrada." });
+                    return NotFound(new { message = $"Survey with ID {id} not found." });
 
                 await _surveyRepository.Delete(survey.Id);
 
@@ -164,8 +164,8 @@ namespace SurveySystem.Api.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Erro interno ao deletar pesquisa {SurveyId}.", id);
-                return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Ocorreu um erro interno ao processar sua requisição." });
+                _logger.LogError(ex, "Internal error while deleting survey {SurveyId}.", id);
+                return StatusCode(StatusCodes.Status500InternalServerError, new { message = "An internal error occurred while processing your request." });
             }
         }
 
@@ -189,7 +189,7 @@ namespace SurveySystem.Api.Controllers
             {
                 var survey = await _surveyRepository.GetById(id);
                 if (survey is null)
-                    return NotFound(new { message = $"Pesquisa com ID {id} não encontrada." });
+                    return NotFound(new { message = $"Survey with ID {id} not found." });
 
                 survey.AddQuestion(request.Text, request.Options);
 
@@ -201,13 +201,13 @@ namespace SurveySystem.Api.Controllers
             }
             catch (DomainException ex)
             {
-                _logger.LogWarning(ex, "Erro de domínio ao adicionar questão a pesquisa {SurveyId}: {Message}", id, ex.Message);
+                _logger.LogWarning(ex, "Domain error when adding question to survey {SurveyId}: {Message}", id, ex.Message);
                 return BadRequest(new { message = ex.Message });
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Erro interno ao adicionar questão a pesquisa {SurveyId}.", id);
-                return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Ocorreu um erro interno ao processar sua requisição." });
+                _logger.LogError(ex, "Internal error while adding question to survey {SurveyId}.", id);
+                return StatusCode(StatusCodes.Status500InternalServerError, new { message = "An internal error occurred while processing your request." });
             }
         }
 
@@ -231,7 +231,7 @@ namespace SurveySystem.Api.Controllers
             {
                 var survey = await _surveyRepository.GetById(id);
                 if (survey is null)
-                    return NotFound(new { message = $"Pesquisa com ID {id} não encontrada." });
+                    return NotFound(new { message = $"Survey with ID {id} not found." });
 
                 survey.RemoveQuestion(questionIndex);
 
@@ -243,13 +243,13 @@ namespace SurveySystem.Api.Controllers
             }
             catch (DomainException ex)
             {
-                _logger.LogWarning(ex, "Erro de domínio ao deletar questão da pesquisa {SurveyId}: {Message}", id, ex.Message);
+                _logger.LogWarning(ex, "Domain error when deleting survey question {SurveyId}: {Message}", id, ex.Message);
                 return BadRequest(new { message = ex.Message });
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Erro interno ao deletar questão da pesquisa {SurveyId}.", id);
-                return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Ocorreu um erro interno ao processar sua requisição." });
+                _logger.LogError(ex, "Internal error while deleting survey question {SurveyId}.", id);
+                return StatusCode(StatusCodes.Status500InternalServerError, new { message = "An internal error occurred while processing your request." });
             }
         }
 
@@ -273,7 +273,7 @@ namespace SurveySystem.Api.Controllers
                 var survey = await _surveyRepository.GetById(id);
 
                 if (survey is null)
-                    return NotFound(new { message = $"Pesquisa com ID {id} não encontrada." });
+                    return NotFound(new { message = $"Survey with ID {id} not found." });
 
                 survey.Publish();
 
@@ -285,13 +285,13 @@ namespace SurveySystem.Api.Controllers
             }
             catch (DomainException ex)
             {
-                _logger.LogWarning(ex, "Erro de domínio ao publicar a pesquisa {SurveyId}: {Message}", id, ex.Message);
+                _logger.LogWarning(ex, "Domain error when publishing survey {SurveyId}: {Message}", id, ex.Message);
                 return BadRequest(new { message = ex.Message });
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Erro interno ao publicar a pesquisa {SurveyId}.", id);
-                return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Ocorreu um erro interno ao processar sua requisição." });
+                _logger.LogError(ex, "Internal error while publishing the survey {SurveyId}.", id);
+                return StatusCode(StatusCodes.Status500InternalServerError, new { message = "An internal error occurred while processing your request." });
             }
         }
 
@@ -315,7 +315,7 @@ namespace SurveySystem.Api.Controllers
                 var survey = await _surveyRepository.GetById(id);
 
                 if (survey is null)
-                    return NotFound(new { message = $"Pesquisa com ID {id} não encontrada." });
+                    return NotFound(new { message = $"Survey with ID {id} not found." });
 
                 survey.Close();
 
@@ -327,13 +327,13 @@ namespace SurveySystem.Api.Controllers
             }
             catch (DomainException ex)
             {
-                _logger.LogWarning(ex, "Erro de domínio ao encerrar a pesquisa {SurveyId}: {Message}", id, ex.Message);
+                _logger.LogWarning(ex, "Domain error when closing survey {SurveyId}: {Message}", id, ex.Message);
                 return BadRequest(new { message = ex.Message });
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Erro interno ao encerrar a pesquisa {SurveyId}.", id);
-                return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Ocorreu um erro interno ao processar sua requisição." });
+                _logger.LogError(ex, "Internal error while closing survey {SurveyId}.", id);
+                return StatusCode(StatusCodes.Status500InternalServerError, new { message = "An internal error occurred while processing your request." });
             }
         }
 
@@ -354,15 +354,15 @@ namespace SurveySystem.Api.Controllers
                 var survey = await _surveyRepository.GetById(id);
 
                 if (survey is null)
-                    return NotFound(new { message = $"Pesquisa com ID {id} não encontrada." });
+                    return NotFound(new { message = $"Survey with ID {id} not found." });
 
                 var response = MapToSurveyResponse(survey);
                 return Ok(response);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Erro interno ao buscar pesquisa com ID {SurveyId}.", id);
-                return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Ocorreu um erro interno ao processar sua requisição." });
+                _logger.LogError(ex, "Internal error while searching for a survey with ID {SurveyId}.", id);
+                return StatusCode(StatusCodes.Status500InternalServerError, new { message = "An internal error occurred while processing your request." });
             }
         }
 
@@ -385,8 +385,8 @@ namespace SurveySystem.Api.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Erro interno ao listar pesquisas.");
-                return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Ocorreu um erro interno ao processar sua requisição." });
+                _logger.LogError(ex, "Internal error while listing surveys.");
+                return StatusCode(StatusCodes.Status500InternalServerError, new { message = "An internal error occurred while processing your request." });
             }
         }
 
@@ -406,7 +406,7 @@ namespace SurveySystem.Api.Controllers
                 var survey = await _surveyRepository.GetById(id);
 
                 if (survey is null)
-                    return NotFound(new { message = $"Pesquisa com ID {id} não encontrada." });
+                    return NotFound(new { message = $"Survey with ID {id} not found." });
 
                 var submissions = await _submissionRepository.GetBySurveyId(id);
 
@@ -433,7 +433,7 @@ namespace SurveySystem.Api.Controllers
                         {
                             Text = o.Text,
                             TotalVotes = submissions.Sum(s => s.Answers.Count(a => a.QuestionText == q.Text && a.OptionText == o.Text)),
-                            PercentualVotes = 0 // Será calculado depois
+                            PercentualVotes = 0
                         }).ToList()
                     }).ToList()
                 };
@@ -452,8 +452,34 @@ namespace SurveySystem.Api.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Erro interno ao buscar resultado da pesquisa com ID {SurveyId}.", id);
-                return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Ocorreu um erro interno ao processar sua requisição." });
+                _logger.LogError(ex, "Internal error while retrieving survey results with ID {SurveyId}.", id);
+                return StatusCode(StatusCodes.Status500InternalServerError, new { message = "An internal error occurred while processing your request." });
+            }
+        }
+
+        /// <summary>
+        /// Deleta todas as pesquisas.
+        /// </summary>
+        /// <returns>Status de sucesso sem conteúdo.</returns>
+        [HttpDelete("DeleteAll")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> DeleteAll()
+        {
+            try
+            {
+                var surveys = await _surveyRepository.GetAll();
+        
+                foreach (var survey in surveys)
+                    await _surveyRepository.Delete(survey.Id);
+        
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Internal error while deleting all surveys.");
+                return StatusCode(StatusCodes.Status500InternalServerError, new { message = "An internal error occurred while processing your request." });
             }
         }
     }
